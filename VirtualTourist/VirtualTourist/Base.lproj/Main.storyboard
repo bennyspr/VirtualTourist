@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="jew-Ik-oMJ">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Virtual Tourist-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="TravelLocationsMapViewController" customModule="VirtualTourist" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -16,11 +16,152 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="crP-ds-btK">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                            </mapView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="crP-ds-btK" secondAttribute="trailing" id="Oly-Kz-mKV"/>
+                            <constraint firstItem="crP-ds-btK" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="hqh-bp-F5Q"/>
+                            <constraint firstItem="crP-ds-btK" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="jPX-1e-gXG"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="crP-ds-btK" secondAttribute="bottom" id="q8a-FR-sy5"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="crP-ds-btK"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="Oly-Kz-mKV"/>
+                                <exclude reference="hqh-bp-F5Q"/>
+                                <exclude reference="jPX-1e-gXG"/>
+                                <exclude reference="q8a-FR-sy5"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="crP-ds-btK"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="Oly-Kz-mKV"/>
+                                <include reference="hqh-bp-F5Q"/>
+                                <include reference="jPX-1e-gXG"/>
+                                <include reference="q8a-FR-sy5"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="Virtual Tourist" id="4Qv-FA-mtu">
+                        <barButtonItem key="rightBarButtonItem" systemItem="edit" id="Kdb-P0-RDY">
+                            <connections>
+                                <segue destination="i1P-qs-S3q" kind="show" id="7cT-K8-MFk"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="crP-ds-btK" id="UUz-0u-Rew"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="1276.5" y="1120"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="BhT-qG-if4">
+            <objects>
+                <viewController id="i1P-qs-S3q" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Av9-pM-wEr"/>
+                        <viewControllerLayoutGuide type="bottom" id="1t9-lf-X6e"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="fh8-zU-tqL">
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BF4-lJ-FBz">
+                                <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="zVK-vr-Q72"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="zVK-vr-Q72"/>
+                                    </mask>
+                                </variation>
+                                <variation key="widthClass=compact">
+                                    <mask key="constraints">
+                                        <include reference="zVK-vr-Q72"/>
+                                    </mask>
+                                </variation>
+                            </mapView>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jhI-7W-Uga">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <items>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="iPs-Hv-jSE"/>
+                                    <barButtonItem title="New Collection" id="7rW-IR-dtv"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="K2x-yL-Dow"/>
+                                </items>
+                            </toolbar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailing" secondItem="BF4-lJ-FBz" secondAttribute="trailing" id="2uX-AQ-HYA"/>
+                            <constraint firstAttribute="trailing" secondItem="jhI-7W-Uga" secondAttribute="trailing" id="6cb-bV-i06"/>
+                            <constraint firstItem="BF4-lJ-FBz" firstAttribute="top" secondItem="Av9-pM-wEr" secondAttribute="bottom" id="C3V-cf-MX3"/>
+                            <constraint firstItem="1t9-lf-X6e" firstAttribute="top" secondItem="jhI-7W-Uga" secondAttribute="bottom" id="ZMx-qq-71B"/>
+                            <constraint firstItem="BF4-lJ-FBz" firstAttribute="leading" secondItem="fh8-zU-tqL" secondAttribute="leading" id="egl-6e-mvL"/>
+                            <constraint firstItem="jhI-7W-Uga" firstAttribute="leading" secondItem="fh8-zU-tqL" secondAttribute="leading" id="wHl-M7-C2H"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="BF4-lJ-FBz"/>
+                                <exclude reference="jhI-7W-Uga"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="2uX-AQ-HYA"/>
+                                <exclude reference="C3V-cf-MX3"/>
+                                <exclude reference="egl-6e-mvL"/>
+                                <exclude reference="6cb-bV-i06"/>
+                                <exclude reference="wHl-M7-C2H"/>
+                                <exclude reference="ZMx-qq-71B"/>
+                            </mask>
+                        </variation>
+                        <variation key="widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="BF4-lJ-FBz"/>
+                                <include reference="jhI-7W-Uga"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="2uX-AQ-HYA"/>
+                                <include reference="C3V-cf-MX3"/>
+                                <include reference="egl-6e-mvL"/>
+                                <include reference="6cb-bV-i06"/>
+                                <include reference="wHl-M7-C2H"/>
+                                <include reference="ZMx-qq-71B"/>
+                            </mask>
+                        </variation>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Y0I-hG-mI7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2038.5" y="1120"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="YuX-e8-Llb">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="jew-Ik-oMJ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="eZ6-71-kat">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="VGu-Wg-I65"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DC8-nQ-mJg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="510" y="1120"/>
         </scene>
     </scenes>
 </document>

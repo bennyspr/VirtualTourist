@@ -8,22 +8,24 @@
 
 /* Begin PBXBuildFile section */
 		B2F07A331CB01A2400706E6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F07A321CB01A2400706E6F /* AppDelegate.swift */; };
-		B2F07A351CB01A2400706E6F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F07A341CB01A2400706E6F /* ViewController.swift */; };
+		B2F07A351CB01A2400706E6F /* TravelLocationsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F07A341CB01A2400706E6F /* TravelLocationsMapViewController.swift */; };
 		B2F07A381CB01A2400706E6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2F07A361CB01A2400706E6F /* Main.storyboard */; };
 		B2F07A3B1CB01A2400706E6F /* VirtualTourist.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = B2F07A391CB01A2400706E6F /* VirtualTourist.xcdatamodeld */; };
 		B2F07A3D1CB01A2400706E6F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B2F07A3C1CB01A2400706E6F /* Assets.xcassets */; };
 		B2F07A401CB01A2400706E6F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2F07A3E1CB01A2400706E6F /* LaunchScreen.storyboard */; };
+		B2F07A481CB0202300706E6F /* PhotoAlbumViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F07A471CB0202300706E6F /* PhotoAlbumViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		B2F07A2F1CB01A2400706E6F /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2F07A321CB01A2400706E6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B2F07A341CB01A2400706E6F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B2F07A341CB01A2400706E6F /* TravelLocationsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsMapViewController.swift; sourceTree = "<group>"; };
 		B2F07A371CB01A2400706E6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B2F07A3A1CB01A2400706E6F /* VirtualTourist.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = VirtualTourist.xcdatamodel; sourceTree = "<group>"; };
 		B2F07A3C1CB01A2400706E6F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B2F07A3F1CB01A2400706E6F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B2F07A411CB01A2400706E6F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B2F07A471CB0202300706E6F /* PhotoAlbumViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +59,8 @@
 			isa = PBXGroup;
 			children = (
 				B2F07A321CB01A2400706E6F /* AppDelegate.swift */,
-				B2F07A341CB01A2400706E6F /* ViewController.swift */,
+				B2F07A341CB01A2400706E6F /* TravelLocationsMapViewController.swift */,
+				B2F07A471CB0202300706E6F /* PhotoAlbumViewController.swift */,
 				B2F07A361CB01A2400706E6F /* Main.storyboard */,
 				B2F07A3C1CB01A2400706E6F /* Assets.xcassets */,
 				B2F07A3E1CB01A2400706E6F /* LaunchScreen.storyboard */,
@@ -138,9 +141,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B2F07A351CB01A2400706E6F /* ViewController.swift in Sources */,
+				B2F07A351CB01A2400706E6F /* TravelLocationsMapViewController.swift in Sources */,
 				B2F07A331CB01A2400706E6F /* AppDelegate.swift in Sources */,
 				B2F07A3B1CB01A2400706E6F /* VirtualTourist.xcdatamodeld in Sources */,
+				B2F07A481CB0202300706E6F /* PhotoAlbumViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
