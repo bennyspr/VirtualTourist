@@ -7,29 +7,148 @@
 //
 
 import UIKit
+import MapKit
 
 class PhotoAlbumViewController: UIViewController {
 
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var middleView: UIView!
+    @IBOutlet weak var messageLabel: UILabel!
+    @IBOutlet weak var collectionView: UICollectionView!
+    
+    private var photos = []
+    
+    private let space: CGFloat = 3.0
+
+    private lazy var connectionManager: ConnectionManager = {
+        
+        return ConnectionManager()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let flickrApi = FlickrAPI(urlPath: FlickrPath.ServicesRest)
+        flickrApi.urlParameters = [
+            "method": "flickr.photos.search",
+            "api_key": Constant.Flickr.apiKey,
+            "text": "New York",
+            "extras": "url_q,url_m",
+            "format": "json",
+            "nojsoncallback": 1,
+            "per_page": 18,
+            "page": 1
+        ]
+        
+        connectionManager.httpRequest(requestAPI: flickrApi) { (response, success, errorMessage) in
+            
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                
+                if success {
+                    
+                    if let data = response as? JSON, let results = data["photos"] as? JSON {
+                        
+                        print(results)
+                        
+                        if let photo = results["photo"] as? JSONArray {
+                            
+                            self.photos = photo
+                            self.collectionView.reloadData()
+                        }
+                        
+                    } else {
+                        
+                        print("errorrr")
+                    }
+                    
+                } else if let message = errorMessage {
+                    
+                    print(message)
+                    
+                } else {
+                    
+                    print("?")
+                }
+            })
 
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+        }
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    @IBAction func handleNewCollectionTapAction(sender: AnyObject) {
+        
+        
     }
-    */
+    
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        
+        collectionView.hidden = true
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        
+        collectionView.reloadData()
+        collectionView.hidden = false
+    }
+    
+    private func getDimension() -> CGFloat {
+        
+        return (self.view.frame.size.width - (2 * self.space)) / 3.0
+    }
 
 }
+
+// MARK: UICollectionViewDataSource
+extension PhotoAlbumViewController: UICollectionViewDataSource {
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photos.count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCell", forIndexPath: indexPath) as! PhotoAlbumCell
+        
+        cell.configureWithData(photos[indexPath.row] as! JSON)
+        
+        return cell
+    }
+    
+    
+    
+}
+
+// MARK: UICollectionViewDelegate
+extension PhotoAlbumViewController: UICollectionViewDelegate {
+    
+}
+
+// MARK: UICollectionViewDelegate
+extension PhotoAlbumViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        
+        let dimension = getDimension()
+        return CGSize(width: dimension, height: dimension)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+        
+        return space
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+        
+        return space
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        
+        return CGSize(width: view.frame.height, height: space)
+    }
+    
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        
+        return CGSize(width: view.frame.height, height: space)
+    }
+}
+

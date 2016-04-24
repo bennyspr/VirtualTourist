@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B215F0E01CCBBF9000EC33B7 /* EditBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215F0DF1CCBBF9000EC33B7 /* EditBarButton.swift */; };
+		B215F0E31CCBE9E400EC33B7 /* PhotoAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215F0E21CCBE9E400EC33B7 /* PhotoAlbumCell.swift */; };
+		B270A4EF1CC285A000565E67 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270A4EE1CC285A000565E67 /* User.swift */; };
+		B2D226C71CB15F3100C2E5D0 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226C61CB15F3100C2E5D0 /* Constant.swift */; };
+		B2D226CA1CB1655400C2E5D0 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226C91CB1655400C2E5D0 /* ConnectionManager.swift */; };
+		B2D226CE1CB165C700C2E5D0 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226CD1CB165C700C2E5D0 /* Reach.swift */; };
+		B2D226D11CB1661800C2E5D0 /* Typealias.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226D01CB1661800C2E5D0 /* Typealias.swift */; };
+		B2D226D41CB1666D00C2E5D0 /* Enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226D31CB1666D00C2E5D0 /* Enums.swift */; };
+		B2D226D61CB1677C00C2E5D0 /* FlickrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226D51CB1677C00C2E5D0 /* FlickrAPI.swift */; };
+		B2D226D81CB177C100C2E5D0 /* VirtualTouristHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226D71CB177C100C2E5D0 /* VirtualTouristHelper.swift */; };
 		B2F07A331CB01A2400706E6F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F07A321CB01A2400706E6F /* AppDelegate.swift */; };
 		B2F07A351CB01A2400706E6F /* TravelLocationsMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F07A341CB01A2400706E6F /* TravelLocationsMapViewController.swift */; };
 		B2F07A381CB01A2400706E6F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B2F07A361CB01A2400706E6F /* Main.storyboard */; };
@@ -17,6 +27,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B215F0DF1CCBBF9000EC33B7 /* EditBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBarButton.swift; sourceTree = "<group>"; };
+		B215F0E21CCBE9E400EC33B7 /* PhotoAlbumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCell.swift; sourceTree = "<group>"; };
+		B270A4EE1CC285A000565E67 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B2D226C61CB15F3100C2E5D0 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		B2D226C91CB1655400C2E5D0 /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
+		B2D226CD1CB165C700C2E5D0 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
+		B2D226D01CB1661800C2E5D0 /* Typealias.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Typealias.swift; sourceTree = "<group>"; };
+		B2D226D31CB1666D00C2E5D0 /* Enums.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Enums.swift; sourceTree = "<group>"; };
+		B2D226D51CB1677C00C2E5D0 /* FlickrAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FlickrAPI.swift; sourceTree = "<group>"; };
+		B2D226D71CB177C100C2E5D0 /* VirtualTouristHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VirtualTouristHelper.swift; sourceTree = "<group>"; };
 		B2F07A2F1CB01A2400706E6F /* VirtualTourist.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VirtualTourist.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B2F07A321CB01A2400706E6F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B2F07A341CB01A2400706E6F /* TravelLocationsMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TravelLocationsMapViewController.swift; sourceTree = "<group>"; };
@@ -39,6 +59,84 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B215F0E11CCBE99F00EC33B7 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				B215F0E21CCBE9E400EC33B7 /* PhotoAlbumCell.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		B2D226C31CB15EC000C2E5D0 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				B2D226C61CB15F3100C2E5D0 /* Constant.swift */,
+			);
+			name = Constants;
+			sourceTree = "<group>";
+		};
+		B2D226C41CB15EF100C2E5D0 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				B2F07A471CB0202300706E6F /* PhotoAlbumViewController.swift */,
+				B2F07A341CB01A2400706E6F /* TravelLocationsMapViewController.swift */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
+		B2D226C51CB15EFE00C2E5D0 /* StoryBoards */ = {
+			isa = PBXGroup;
+			children = (
+				B2F07A3E1CB01A2400706E6F /* LaunchScreen.storyboard */,
+				B2F07A361CB01A2400706E6F /* Main.storyboard */,
+			);
+			name = StoryBoards;
+			sourceTree = "<group>";
+		};
+		B2D226C81CB1653500C2E5D0 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				B2D226C91CB1655400C2E5D0 /* ConnectionManager.swift */,
+			);
+			name = Managers;
+			sourceTree = "<group>";
+		};
+		B2D226CB1CB1658600C2E5D0 /* ImportedModules */ = {
+			isa = PBXGroup;
+			children = (
+				B2D226CC1CB165C700C2E5D0 /* Reach */,
+			);
+			name = ImportedModules;
+			sourceTree = "<group>";
+		};
+		B2D226CC1CB165C700C2E5D0 /* Reach */ = {
+			isa = PBXGroup;
+			children = (
+				B2D226CD1CB165C700C2E5D0 /* Reach.swift */,
+			);
+			path = Reach;
+			sourceTree = "<group>";
+		};
+		B2D226CF1CB165F700C2E5D0 /* Others */ = {
+			isa = PBXGroup;
+			children = (
+				B2D226D01CB1661800C2E5D0 /* Typealias.swift */,
+				B2D226D51CB1677C00C2E5D0 /* FlickrAPI.swift */,
+				B2D226D71CB177C100C2E5D0 /* VirtualTouristHelper.swift */,
+				B270A4EE1CC285A000565E67 /* User.swift */,
+				B215F0DF1CCBBF9000EC33B7 /* EditBarButton.swift */,
+			);
+			name = Others;
+			sourceTree = "<group>";
+		};
+		B2D226D21CB1664700C2E5D0 /* Enums */ = {
+			isa = PBXGroup;
+			children = (
+				B2D226D31CB1666D00C2E5D0 /* Enums.swift */,
+			);
+			name = Enums;
+			sourceTree = "<group>";
+		};
 		B2F07A261CB01A2400706E6F = {
 			isa = PBXGroup;
 			children = (
@@ -59,12 +157,16 @@
 			isa = PBXGroup;
 			children = (
 				B2F07A321CB01A2400706E6F /* AppDelegate.swift */,
-				B2F07A341CB01A2400706E6F /* TravelLocationsMapViewController.swift */,
-				B2F07A471CB0202300706E6F /* PhotoAlbumViewController.swift */,
-				B2F07A361CB01A2400706E6F /* Main.storyboard */,
-				B2F07A3C1CB01A2400706E6F /* Assets.xcassets */,
-				B2F07A3E1CB01A2400706E6F /* LaunchScreen.storyboard */,
+				B2D226C51CB15EFE00C2E5D0 /* StoryBoards */,
+				B2D226C41CB15EF100C2E5D0 /* Controllers */,
+				B2D226C31CB15EC000C2E5D0 /* Constants */,
+				B2D226C81CB1653500C2E5D0 /* Managers */,
+				B2D226CB1CB1658600C2E5D0 /* ImportedModules */,
+				B2D226D21CB1664700C2E5D0 /* Enums */,
+				B2D226CF1CB165F700C2E5D0 /* Others */,
+				B215F0E11CCBE99F00EC33B7 /* Views */,
 				B2F07A411CB01A2400706E6F /* Info.plist */,
+				B2F07A3C1CB01A2400706E6F /* Assets.xcassets */,
 				B2F07A391CB01A2400706E6F /* VirtualTourist.xcdatamodeld */,
 			);
 			path = VirtualTourist;
@@ -141,10 +243,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B215F0E01CCBBF9000EC33B7 /* EditBarButton.swift in Sources */,
+				B2D226D81CB177C100C2E5D0 /* VirtualTouristHelper.swift in Sources */,
 				B2F07A351CB01A2400706E6F /* TravelLocationsMapViewController.swift in Sources */,
+				B2D226CA1CB1655400C2E5D0 /* ConnectionManager.swift in Sources */,
 				B2F07A331CB01A2400706E6F /* AppDelegate.swift in Sources */,
+				B2D226C71CB15F3100C2E5D0 /* Constant.swift in Sources */,
+				B215F0E31CCBE9E400EC33B7 /* PhotoAlbumCell.swift in Sources */,
+				B2D226CE1CB165C700C2E5D0 /* Reach.swift in Sources */,
 				B2F07A3B1CB01A2400706E6F /* VirtualTourist.xcdatamodeld in Sources */,
+				B2D226D11CB1661800C2E5D0 /* Typealias.swift in Sources */,
+				B270A4EF1CC285A000565E67 /* User.swift in Sources */,
+				B2D226D41CB1666D00C2E5D0 /* Enums.swift in Sources */,
 				B2F07A481CB0202300706E6F /* PhotoAlbumViewController.swift in Sources */,
+				B2D226D61CB1677C00C2E5D0 /* FlickrAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -257,7 +369,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = VirtualTourist/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.brodr.VirtualTourist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -268,7 +382,9 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				INFOPLIST_FILE = VirtualTourist/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.brodr.VirtualTourist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -294,6 +410,7 @@
 				B2F07A461CB01A2400706E6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 

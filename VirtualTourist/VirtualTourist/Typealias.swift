@@ -7,3 +7,9 @@
 //
 
 import Foundation
+
+typealias JSON = NSDictionary
+typealias JSONArray = [JSON]
+typealias EmailPassword = (email: String, password: String)
+typealias HeaderFieldForHTTP = (value: String, field: String)
+typealias LatLong = (latitude: Double, longitude: Double)

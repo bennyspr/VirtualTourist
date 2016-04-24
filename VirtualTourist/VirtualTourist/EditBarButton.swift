@@ -10,4 +10,12 @@ import UIKit
 
 class EditBarButton: UIBarButtonItem {
 
+    var status: StatusButton = StatusButton.Edit {
+        
+        didSet {
+            self.title = status.rawValue
+        }
+    }
+ 
+    
 }

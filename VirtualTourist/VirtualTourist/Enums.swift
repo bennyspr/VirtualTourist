@@ -7,3 +7,28 @@
 //
 
 import Foundation
+
+enum HTTPRequestMethod: String {
+    
+    case GET, POST, PUT, DELETE
+}
+
+enum FlickrPath: String {
+    
+    case None = ""
+    case ServicesRest = "services/rest/"
+}
+
+enum UserDefaultKey: String {
+    
+    case LatitudeDegree
+    case LongitudeDegree
+    case LatitudeDelta
+    case LongitudeDelta
+}
+
+enum StatusButton: String {
+    
+    case Edit
+    case Done
+}
