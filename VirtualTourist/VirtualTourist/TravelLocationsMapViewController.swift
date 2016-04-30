@@ -8,8 +8,9 @@
 
 import UIKit
 import MapKit
+import CoreData
 
-class TravelLocationsMapViewController: UIViewController {
+class TravelLocationsMapViewController: ViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var editBarButton: EditBarButton!
@@ -169,4 +170,6 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
         
     }
 }
+
+
 

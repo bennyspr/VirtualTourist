@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class PhotoAlbumViewController: UIViewController {
+class PhotoAlbumViewController: ViewController {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var middleView: UIView!

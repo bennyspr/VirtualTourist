@@ -10,6 +10,12 @@
 		B215F0E01CCBBF9000EC33B7 /* EditBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215F0DF1CCBBF9000EC33B7 /* EditBarButton.swift */; };
 		B215F0E31CCBE9E400EC33B7 /* PhotoAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215F0E21CCBE9E400EC33B7 /* PhotoAlbumCell.swift */; };
 		B270A4EF1CC285A000565E67 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270A4EE1CC285A000565E67 /* User.swift */; };
+		B2D193C21CD4E0BD0085D36F /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D193C11CD4E0BD0085D36F /* Pin.swift */; };
+		B2D193C51CD4E1BB0085D36F /* ManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D193C41CD4E1BB0085D36F /* ManagedObject.swift */; };
+		B2D193C71CD4E33C0085D36F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D193C61CD4E33C0085D36F /* Photo.swift */; };
+		B2D193C91CD4E84D0085D36F /* ManagedObjectContextSettable.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D193C81CD4E84D0085D36F /* ManagedObjectContextSettable.swift */; };
+		B2D193CB1CD4EF1B0085D36F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D193CA1CD4EF1B0085D36F /* ViewController.swift */; };
+		B2D193CD1CD4F19C0085D36F /* ManagedObjectType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D193CC1CD4F19C0085D36F /* ManagedObjectType.swift */; };
 		B2D226C71CB15F3100C2E5D0 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226C61CB15F3100C2E5D0 /* Constant.swift */; };
 		B2D226CA1CB1655400C2E5D0 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226C91CB1655400C2E5D0 /* ConnectionManager.swift */; };
 		B2D226CE1CB165C700C2E5D0 /* Reach.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D226CD1CB165C700C2E5D0 /* Reach.swift */; };
@@ -30,6 +36,12 @@
 		B215F0DF1CCBBF9000EC33B7 /* EditBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBarButton.swift; sourceTree = "<group>"; };
 		B215F0E21CCBE9E400EC33B7 /* PhotoAlbumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCell.swift; sourceTree = "<group>"; };
 		B270A4EE1CC285A000565E67 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B2D193C11CD4E0BD0085D36F /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
+		B2D193C41CD4E1BB0085D36F /* ManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObject.swift; sourceTree = "<group>"; };
+		B2D193C61CD4E33C0085D36F /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
+		B2D193C81CD4E84D0085D36F /* ManagedObjectContextSettable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectContextSettable.swift; sourceTree = "<group>"; };
+		B2D193CA1CD4EF1B0085D36F /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B2D193CC1CD4F19C0085D36F /* ManagedObjectType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObjectType.swift; sourceTree = "<group>"; };
 		B2D226C61CB15F3100C2E5D0 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		B2D226C91CB1655400C2E5D0 /* ConnectionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		B2D226CD1CB165C700C2E5D0 /* Reach.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Reach.swift; sourceTree = "<group>"; };
@@ -67,6 +79,26 @@
 			name = Views;
 			sourceTree = "<group>";
 		};
+		B2D193C01CD4E0800085D36F /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B2D193C11CD4E0BD0085D36F /* Pin.swift */,
+				B2D193C61CD4E33C0085D36F /* Photo.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		B2D193C31CD4E1710085D36F /* CoreData */ = {
+			isa = PBXGroup;
+			children = (
+				B2F07A391CB01A2400706E6F /* VirtualTourist.xcdatamodeld */,
+				B2D193C41CD4E1BB0085D36F /* ManagedObject.swift */,
+				B2D193C81CD4E84D0085D36F /* ManagedObjectContextSettable.swift */,
+				B2D193CC1CD4F19C0085D36F /* ManagedObjectType.swift */,
+			);
+			name = CoreData;
+			sourceTree = "<group>";
+		};
 		B2D226C31CB15EC000C2E5D0 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
@@ -80,6 +112,7 @@
 			children = (
 				B2F07A471CB0202300706E6F /* PhotoAlbumViewController.swift */,
 				B2F07A341CB01A2400706E6F /* TravelLocationsMapViewController.swift */,
+				B2D193CA1CD4EF1B0085D36F /* ViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -165,9 +198,10 @@
 				B2D226D21CB1664700C2E5D0 /* Enums */,
 				B2D226CF1CB165F700C2E5D0 /* Others */,
 				B215F0E11CCBE99F00EC33B7 /* Views */,
+				B2D193C01CD4E0800085D36F /* Models */,
+				B2D193C31CD4E1710085D36F /* CoreData */,
 				B2F07A411CB01A2400706E6F /* Info.plist */,
 				B2F07A3C1CB01A2400706E6F /* Assets.xcassets */,
-				B2F07A391CB01A2400706E6F /* VirtualTourist.xcdatamodeld */,
 			);
 			path = VirtualTourist;
 			sourceTree = "<group>";
@@ -243,17 +277,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2D193C21CD4E0BD0085D36F /* Pin.swift in Sources */,
 				B215F0E01CCBBF9000EC33B7 /* EditBarButton.swift in Sources */,
+				B2D193C51CD4E1BB0085D36F /* ManagedObject.swift in Sources */,
+				B2D193C91CD4E84D0085D36F /* ManagedObjectContextSettable.swift in Sources */,
 				B2D226D81CB177C100C2E5D0 /* VirtualTouristHelper.swift in Sources */,
+				B2D193CB1CD4EF1B0085D36F /* ViewController.swift in Sources */,
 				B2F07A351CB01A2400706E6F /* TravelLocationsMapViewController.swift in Sources */,
 				B2D226CA1CB1655400C2E5D0 /* ConnectionManager.swift in Sources */,
 				B2F07A331CB01A2400706E6F /* AppDelegate.swift in Sources */,
 				B2D226C71CB15F3100C2E5D0 /* Constant.swift in Sources */,
 				B215F0E31CCBE9E400EC33B7 /* PhotoAlbumCell.swift in Sources */,
 				B2D226CE1CB165C700C2E5D0 /* Reach.swift in Sources */,
+				B2D193C71CD4E33C0085D36F /* Photo.swift in Sources */,
 				B2F07A3B1CB01A2400706E6F /* VirtualTourist.xcdatamodeld in Sources */,
 				B2D226D11CB1661800C2E5D0 /* Typealias.swift in Sources */,
 				B270A4EF1CC285A000565E67 /* User.swift in Sources */,
+				B2D193CD1CD4F19C0085D36F /* ManagedObjectType.swift in Sources */,
 				B2D226D41CB1666D00C2E5D0 /* Enums.swift in Sources */,
 				B2F07A481CB0202300706E6F /* PhotoAlbumViewController.swift in Sources */,
 				B2D226D61CB1677C00C2E5D0 /* FlickrAPI.swift in Sources */,
