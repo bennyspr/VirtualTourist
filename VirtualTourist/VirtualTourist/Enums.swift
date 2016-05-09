@@ -32,3 +32,10 @@ enum StatusButton: String {
     case Edit
     case Done
 }
+
+enum DataProviderUpdate<Object> {
+    case Insert(NSIndexPath)
+    case Update(NSIndexPath, Object)
+    case Move(NSIndexPath, NSIndexPath)
+    case Delete(NSIndexPath)
+}

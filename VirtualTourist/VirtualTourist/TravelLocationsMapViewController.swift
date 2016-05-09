@@ -28,7 +28,7 @@ class TravelLocationsMapViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.addSubview(bottomView)
+        setupMapView()
     }
 
     override func viewDidAppear(animated: Bool) {
@@ -43,10 +43,24 @@ class TravelLocationsMapViewController: ViewController {
         
         if segue.identifier == "albumViewSegue" {
             
-            let controller = segue.destinationViewController as! PhotoAlbumViewController
+            // let controller = segue.destinationViewController as! PhotoAlbumViewController
             
             
         }
+    }
+    
+    private func setupMapView() {
+        
+        view.addSubview(bottomView)
+        
+        let request = Pin.sortedFetchRequest
+        request.returnsObjectsAsFaults = false
+//        request.fetchBatchSize = 20
+        let frc = NSFetchedResultsController(fetchRequest: request,
+                                             managedObjectContext: managedObjectContext,
+                                             sectionNameKeyPath: nil, cacheName: nil)
+        frc.delegate = self
+        try! frc.performFetch()
     }
 
     @IBAction func handleEditButtonTapAction(sender: EditBarButton) {
@@ -91,47 +105,40 @@ class TravelLocationsMapViewController: ViewController {
     
     @IBAction func handleMapLongPressGestureAction(sender: UILongPressGestureRecognizer) {
         
-        if editBarButton.status == .Done {
-            return
-        }
+        if editBarButton.status == .Done { return }
         
         switch sender.state {
             
-        case .Began:
-            print("Began")
+        case .Possible:
             break
-        case .Cancelled:
-            print("Cancelled")
+        case .Began:
             break
         case .Changed:
-            print("Changed")
             break
         case .Ended:
             
-            let touchPoint = sender.locationInView(mapView)
-            let touchMapCoordinate = mapView.convertPoint(touchPoint, toCoordinateFromView: mapView)
-            let pa = MKPointAnnotation()
-            pa.coordinate = touchMapCoordinate
-            pa.title = "Test"
+            let annotation = MKPointAnnotation()
             
-            mapView.addAnnotation(pa)
+            annotation.coordinate = mapView.convertPoint(sender.locationInView(mapView), toCoordinateFromView: mapView)
             
+            managedObjectContext.performChanges {
+                
+                Pin.insertIntoContext(
+                    self.managedObjectContext,
+                    latitude: annotation.coordinate.latitude,
+                    longitude: annotation.coordinate.longitude
+                )
+            }
             
-            print("Ended")
+            break
+        case .Cancelled:
             break
         case .Failed:
-            print("Failed")
             break
-        case .Possible:
-            print("Possible")
-            break
+        
         }
     }
     
-    
-    
-    
-
 }
 
 // MARK: MKMapViewDelegate
@@ -163,11 +170,48 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
             break
         case .Done:
             if let annotation = view.annotation {
+                
+                managedObjectContext.performChanges {
+                    
+                    managedObjectContext.deleteObject(<#T##object: NSManagedObject##NSManagedObject#>) deleteObject(self.mood)
+                }
+                
                 mapView.removeAnnotation(annotation)
             }
             break
         }
         
+    }
+}
+
+// MARK: NSFetchedResultsControllerDelegate
+extension TravelLocationsMapViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        switch type {
+            
+        case .Insert:
+
+            if let pin = anObject as? Pin {
+                // mapView.removeAnnotation(pin.annotation)
+                mapView.addAnnotation(pin.annotation)
+            }
+            break
+            
+        case .Delete:
+            
+            if let pin = anObject as? Pin {
+                mapView.removeAnnotation(pin.annotation)
+            }
+            break
+            
+        case .Move:
+            break
+            
+        case .Update:
+            break
+        }
     }
 }
 

@@ -6,10 +6,10 @@
 //  Copyright © 2016 Benny Rodriguez. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
-typealias JSON = NSDictionary
-typealias JSONArray = [JSON]
-typealias EmailPassword = (email: String, password: String)
-typealias HeaderFieldForHTTP = (value: String, field: String)
-typealias LatLong = (latitude: Double, longitude: Double)
+public typealias JSON = NSDictionary
+public typealias JSONArray = [JSON]
+public typealias EmailPassword = (email: String, password: String)
+public typealias HeaderFieldForHTTP = (value: String, field: String)
+public typealias LatLong = (latitude: Double, longitude: Double)

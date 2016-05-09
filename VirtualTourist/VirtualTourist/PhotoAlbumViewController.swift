@@ -36,7 +36,9 @@ class PhotoAlbumViewController: ViewController {
             "extras": "url_q,url_m",
             "format": "json",
             "nojsoncallback": 1,
-            "per_page": 18,
+            "content_type": 1,
+            "safe_search": 1,
+            "per_page": 24,
             "page": 1
         ]
         
