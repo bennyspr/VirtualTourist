@@ -13,6 +13,17 @@ class ViewController: UIViewController, ManagedObjectContextSettable {
 
     var managedObjectContext: NSManagedObjectContext!
     
+    var frc: NSFetchedResultsController!
+    
+    lazy var user: User = {
+        return User.sharedInstance
+    }()
+    
+    lazy var connectionManager: ConnectionManager = {
+        
+        return ConnectionManager()
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

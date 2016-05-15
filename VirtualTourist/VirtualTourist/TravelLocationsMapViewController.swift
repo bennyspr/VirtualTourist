@@ -16,14 +16,15 @@ class TravelLocationsMapViewController: ViewController {
     @IBOutlet weak var editBarButton: EditBarButton!
     
     private let height: CGFloat = 60
+    private var alreadyLoaded: Bool = false
     
-    private lazy var user: User = {
-        return User.sharedInstance
-    }()
+    
     
     private lazy var bottomView: UIView = {
         return self.viewForBottom()
     }()
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,15 +38,24 @@ class TravelLocationsMapViewController: ViewController {
         mapView.setRegion(user.previousRegion, animated: false)
         
         mapView.delegate = self
+        
+        if !alreadyLoaded, let pins = frc.fetchedObjects as? [Pin] {
+            for pin in pins {
+                mapView.addAnnotation(pin.annotation)
+            }
+            alreadyLoaded = true
+        }
     }
+    
+    
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         
-        if segue.identifier == "albumViewSegue" {
+        if segue.identifier == "albumViewSegue", let pin = sender as? Pin {
             
-            // let controller = segue.destinationViewController as! PhotoAlbumViewController
+            let controller = segue.destinationViewController as! PhotoAlbumViewController
             
-            
+            controller.pin = pin
         }
     }
     
@@ -56,11 +66,17 @@ class TravelLocationsMapViewController: ViewController {
         let request = Pin.sortedFetchRequest
         request.returnsObjectsAsFaults = false
 //        request.fetchBatchSize = 20
-        let frc = NSFetchedResultsController(fetchRequest: request,
+        frc = NSFetchedResultsController(fetchRequest: request,
                                              managedObjectContext: managedObjectContext,
                                              sectionNameKeyPath: nil, cacheName: nil)
         frc.delegate = self
-        try! frc.performFetch()
+        
+        do {
+            try frc.performFetch()
+
+        } catch {
+            
+        }
     }
 
     @IBAction func handleEditButtonTapAction(sender: EditBarButton) {
@@ -125,8 +141,7 @@ class TravelLocationsMapViewController: ViewController {
                 
                 Pin.insertIntoContext(
                     self.managedObjectContext,
-                    latitude: annotation.coordinate.latitude,
-                    longitude: annotation.coordinate.longitude
+                    t: LatLon(latitude: annotation.coordinate.latitude, longitude: annotation.coordinate.longitude)
                 )
             }
             
@@ -135,10 +150,10 @@ class TravelLocationsMapViewController: ViewController {
             break
         case .Failed:
             break
-        
+            
         }
+
     }
-    
 }
 
 // MARK: MKMapViewDelegate
@@ -164,23 +179,27 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         
-        switch editBarButton.status {
-        case .Edit:
-                performSegueWithIdentifier("albumViewSegue", sender: nil)
-            break
-        case .Done:
-            if let annotation = view.annotation {
-                
-                managedObjectContext.performChanges {
-                    
-                    managedObjectContext.deleteObject(<#T##object: NSManagedObject##NSManagedObject#>) deleteObject(self.mood)
-                }
-                
-                mapView.removeAnnotation(annotation)
-            }
-            break
-        }
         
+        if let annotation = view.annotation, let pin = Pin.findOrFetchPinInContext(managedObjectContext, t: LatLon(annotation.coordinate.latitude, annotation.coordinate.longitude)) {
+            
+            switch editBarButton.status {
+                
+            case .Edit:
+                performSegueWithIdentifier("albumViewSegue", sender: pin)
+                break
+            case .Done:
+                if let annotation = view.annotation {
+                    
+                    managedObjectContext.performChanges {
+                        
+                        self.managedObjectContext.deleteObject(pin)
+                    }
+                    
+                    mapView.removeAnnotation(annotation)
+                }
+                break
+            }
+        }
     }
 }
 

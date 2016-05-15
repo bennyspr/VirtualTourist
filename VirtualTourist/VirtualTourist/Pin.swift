@@ -10,6 +10,7 @@ import Foundation
 import CoreData
 import MapKit
 
+@objc(Pin)
 public final class Pin: ManagedObject {
     
     @NSManaged public private(set) var latitude: Double
@@ -24,14 +25,21 @@ public final class Pin: ManagedObject {
         return point
     }()
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, latitude: Double, longitude: Double) -> Pin {
+    public static func insertIntoContext(moc: NSManagedObjectContext, t: LatLon) -> Pin {
         
         let pin: Pin = moc.insertObject()
-        pin.latitude = latitude
-        pin.longitude = longitude
+        pin.latitude = t.latitude
+        pin.longitude = t.longitude
         return pin
     }
     
+    public static func findOrFetchPinInContext(moc: NSManagedObjectContext, t: LatLon) -> Pin?  {
+        
+        let predicate = NSPredicate(format: "latitude = %@ AND longitude = %@", argumentArray: [t.latitude, t.longitude])
+        
+        return findOrFetchInContext(moc, matchingPredicate: predicate);
+    }
+
     
     
 }

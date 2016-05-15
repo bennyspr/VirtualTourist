@@ -9,6 +9,7 @@
 import Foundation
 import CoreData
 
+@objc(Photo)
 public final class Photo: ManagedObject {
     
     @NSManaged public private(set) var id: Int

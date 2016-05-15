@@ -16,23 +16,48 @@ class PhotoAlbumViewController: ViewController {
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
+    var pin: Pin!
+    
     private var photos = []
     
     private let space: CGFloat = 3.0
 
-    private lazy var connectionManager: ConnectionManager = {
-        
-        return ConnectionManager()
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        requestPhotosData()
+    }
+    
+    @IBAction func handleNewCollectionTapAction(sender: AnyObject) {
+        
+        
+    }
+    
+    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+        
+        collectionView.hidden = true
+    }
+    
+    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+        
+        collectionView.reloadData()
+        collectionView.hidden = false
+    }
+    
+    private func getDimension() -> CGFloat {
+        
+        return (self.view.frame.size.width - (2 * self.space)) / 3.0
+    }
+    
+    private func requestPhotosData() {
+    
         let flickrApi = FlickrAPI(urlPath: FlickrPath.ServicesRest)
+        
         flickrApi.urlParameters = [
             "method": "flickr.photos.search",
             "api_key": Constant.Flickr.apiKey,
-            "text": "New York",
+            "lat": pin.latitude,
+            "lon": pin.longitude,
             "extras": "url_q,url_m",
             "format": "json",
             "nojsoncallback": 1,
@@ -72,29 +97,9 @@ class PhotoAlbumViewController: ViewController {
                     print("?")
                 }
             })
-
+            
         }
-    }
-    
-    @IBAction func handleNewCollectionTapAction(sender: AnyObject) {
-        
-        
-    }
-    
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
-        
-        collectionView.hidden = true
-    }
-    
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
-        
-        collectionView.reloadData()
-        collectionView.hidden = false
-    }
-    
-    private func getDimension() -> CGFloat {
-        
-        return (self.view.frame.size.width - (2 * self.space)) / 3.0
+
     }
 
 }
@@ -114,9 +119,6 @@ extension PhotoAlbumViewController: UICollectionViewDataSource {
         
         return cell
     }
-    
-    
-    
 }
 
 // MARK: UICollectionViewDelegate
@@ -143,14 +145,6 @@ extension PhotoAlbumViewController: UICollectionViewDelegateFlowLayout {
         return space
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        
-        return CGSize(width: view.frame.height, height: space)
-    }
-    
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
-        
-        return CGSize(width: view.frame.height, height: space)
-    }
+
 }
 
