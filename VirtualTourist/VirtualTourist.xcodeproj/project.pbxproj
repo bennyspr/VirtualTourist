@@ -10,6 +10,7 @@
 		B215F0E01CCBBF9000EC33B7 /* EditBarButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215F0DF1CCBBF9000EC33B7 /* EditBarButton.swift */; };
 		B215F0E31CCBE9E400EC33B7 /* PhotoAlbumCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B215F0E21CCBE9E400EC33B7 /* PhotoAlbumCell.swift */; };
 		B270A4EF1CC285A000565E67 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = B270A4EE1CC285A000565E67 /* User.swift */; };
+		B2AE01C71CF0404700C726DB /* UIImage+animatedGIF.m in Sources */ = {isa = PBXBuildFile; fileRef = B2AE01C61CF0404700C726DB /* UIImage+animatedGIF.m */; };
 		B2D193C21CD4E0BD0085D36F /* Pin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D193C11CD4E0BD0085D36F /* Pin.swift */; };
 		B2D193C51CD4E1BB0085D36F /* ManagedObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D193C41CD4E1BB0085D36F /* ManagedObject.swift */; };
 		B2D193C71CD4E33C0085D36F /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D193C61CD4E33C0085D36F /* Photo.swift */; };
@@ -37,6 +38,9 @@
 		B215F0DF1CCBBF9000EC33B7 /* EditBarButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditBarButton.swift; sourceTree = "<group>"; };
 		B215F0E21CCBE9E400EC33B7 /* PhotoAlbumCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoAlbumCell.swift; sourceTree = "<group>"; };
 		B270A4EE1CC285A000565E67 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		B2AE01C51CF0404700C726DB /* UIImage+animatedGIF.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+animatedGIF.h"; sourceTree = "<group>"; };
+		B2AE01C61CF0404700C726DB /* UIImage+animatedGIF.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+animatedGIF.m"; sourceTree = "<group>"; };
+		B2AE01C81CF040C600C726DB /* VirtualTourist-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VirtualTourist-Bridging-Header.h"; sourceTree = "<group>"; };
 		B2D193C11CD4E0BD0085D36F /* Pin.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pin.swift; sourceTree = "<group>"; };
 		B2D193C41CD4E1BB0085D36F /* ManagedObject.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ManagedObject.swift; sourceTree = "<group>"; };
 		B2D193C61CD4E33C0085D36F /* Photo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
@@ -79,6 +83,15 @@
 				B215F0E21CCBE9E400EC33B7 /* PhotoAlbumCell.swift */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		B2AE01C41CF0404700C726DB /* UIImageAnimatedGIF */ = {
+			isa = PBXGroup;
+			children = (
+				B2AE01C51CF0404700C726DB /* UIImage+animatedGIF.h */,
+				B2AE01C61CF0404700C726DB /* UIImage+animatedGIF.m */,
+			);
+			path = UIImageAnimatedGIF;
 			sourceTree = "<group>";
 		};
 		B2D193C01CD4E0800085D36F /* Models */ = {
@@ -147,6 +160,7 @@
 		B2D226CB1CB1658600C2E5D0 /* ImportedModules */ = {
 			isa = PBXGroup;
 			children = (
+				B2AE01C41CF0404700C726DB /* UIImageAnimatedGIF */,
 				B2D226CC1CB165C700C2E5D0 /* Reach */,
 			);
 			name = ImportedModules;
@@ -213,6 +227,7 @@
 				B2D193C31CD4E1710085D36F /* CoreData */,
 				B2F07A411CB01A2400706E6F /* Info.plist */,
 				B2F07A3C1CB01A2400706E6F /* Assets.xcassets */,
+				B2AE01C81CF040C600C726DB /* VirtualTourist-Bridging-Header.h */,
 			);
 			path = VirtualTourist;
 			sourceTree = "<group>";
@@ -307,6 +322,7 @@
 				B270A4EF1CC285A000565E67 /* User.swift in Sources */,
 				B2D193CD1CD4F19C0085D36F /* ManagedObjectType.swift in Sources */,
 				B2D226D41CB1666D00C2E5D0 /* Enums.swift in Sources */,
+				B2AE01C71CF0404700C726DB /* UIImage+animatedGIF.m in Sources */,
 				B2F07A481CB0202300706E6F /* PhotoAlbumViewController.swift in Sources */,
 				B2D226D61CB1677C00C2E5D0 /* FlickrAPI.swift in Sources */,
 			);
@@ -427,6 +443,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.brodr.VirtualTourist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VirtualTourist/VirtualTourist-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -440,6 +457,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.brodr.VirtualTourist;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "VirtualTourist/VirtualTourist-Bridging-Header.h";
 			};
 			name = Release;
 		};
