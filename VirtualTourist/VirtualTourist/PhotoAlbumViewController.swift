@@ -8,6 +8,7 @@
 
 import UIKit
 import MapKit
+import CoreData
 
 class PhotoAlbumViewController: ViewController {
 
@@ -18,14 +19,34 @@ class PhotoAlbumViewController: ViewController {
     
     var pin: Pin!
     
-    private var photos = []
+    private var manager: PhotoManager!
     
     private let space: CGFloat = 3.0
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        requestPhotosData()
+        setupCollectionView()
+        
+//        photos = [
+//            [
+//                "farm": 7,
+//                "height_m": 375,
+//                "height_q": 150,
+//                "id": 6176202752,
+//                "isfamily": 0,
+//                "isfriend": 0,
+//                "ispublic": 1,
+//                "owner": "56978609@N08",
+//                "secret": "0ca0cfa15d",
+//                "server": 6177,
+//                "title": "Merony United Methodist Church",
+//                "url_m": "https://farm7.staticflickr.com/6177/6176202752_0ca0cfa15d.jpg",
+//                "url_q": "https://farm7.staticflickr.com/6177/6176202752_0ca0cfa15d_q.jpg",
+//                "width_m": 500,
+//                "width_q":150
+//            ]
+//        ]
     }
     
     @IBAction func handleNewCollectionTapAction(sender: AnyObject) {
@@ -49,73 +70,60 @@ class PhotoAlbumViewController: ViewController {
         return (self.view.frame.size.width - (2 * self.space)) / 3.0
     }
     
-    private func requestPhotosData() {
-    
-        let flickrApi = FlickrAPI(urlPath: FlickrPath.ServicesRest)
+    private func setupCollectionView() {
         
-        flickrApi.urlParameters = [
-            "method": "flickr.photos.search",
-            "api_key": Constant.Flickr.apiKey,
-            "lat": pin.latitude,
-            "lon": pin.longitude,
-            "extras": "url_q,url_m",
-            "format": "json",
-            "nojsoncallback": 1,
-            "content_type": 1,
-            "safe_search": 1,
-            "per_page": 24,
-            "page": 1
-        ]
+        manager = PhotoManager(pin: pin, inContext: managedObjectContext)
         
-        connectionManager.httpRequest(requestAPI: flickrApi) { (response, success, errorMessage) in
+        if !manager.hasPhotos() {
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            showLabelWithMessage(true, message: "Loading images...")
+            
+            manager.requestPhotos({ (success, errorMessage) in
+                
+                self.showLabelWithMessage(false)
                 
                 if success {
-                    
-                    if let data = response as? JSON, let results = data["photos"] as? JSON {
-                        
-                        print(results)
-                        
-                        if let photo = results["photo"] as? JSONArray {
-                            
-                            self.photos = photo
-                            self.collectionView.reloadData()
-                        }
-                        
-                    } else {
-                        
-                        print("errorrr")
-                    }
-                    
+                    self.collectionView.reloadData()
                 } else if let message = errorMessage {
-                    
-                    print(message)
-                    
+                    self.presentAlertView(withTitle: "Error Message", message: message)
                 } else {
-                    
-                    print("?")
+                    self.presentAlertView(message: "Sorry, something went wrong.")
                 }
             })
             
+        } else {
+            
+            collectionView.reloadData()
         }
-
     }
-
+    
+    private func showLabelWithMessage(active: Bool, message: String? = nil) {
+        
+        if active, let message = message {
+            collectionView.hidden = true
+            messageLabel.text = message
+        } else {
+            collectionView.hidden = false
+            messageLabel.text = "No Images"
+        }
+        
+    }
 }
 
 // MARK: UICollectionViewDataSource
 extension PhotoAlbumViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return photos.count
+        return manager.getPhotos().count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCell", forIndexPath: indexPath) as! PhotoAlbumCell
         
-        cell.configureWithData(photos[indexPath.row] as! JSON)
+        print(indexPath.row)
+        
+        cell.configureWithPhoto(manager.getPhotos()[indexPath.row], inContext: managedObjectContext)
         
         return cell
     }
@@ -147,4 +155,30 @@ extension PhotoAlbumViewController: UICollectionViewDelegateFlowLayout {
     
 
 }
+// MARK: NSFetchedResultsControllerDelegate
+extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate {
+    
+    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+        
+        switch type {
+            
+        case .Insert:
+            
+           
+            break
+            
+        case .Delete:
+            
+            
+            break
+            
+        case .Move:
+            break
+            
+        case .Update:
+            break
+        }
+    }
+}
+
 

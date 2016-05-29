@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class PhotoAlbumCell: UICollectionViewCell {
     
@@ -17,23 +18,42 @@ class PhotoAlbumCell: UICollectionViewCell {
     override func prepareForReuse() {
         super.prepareForReuse()
         
-        print(">>>>")
+        imageView.image = nil
     }
     
-    func configureWithData(data: JSON) {
+    func configureWithPhoto(photo: Photo, inContext moc: NSManagedObjectContext) {
         
-        let url = NSURL(string: data["url_q"] as! String)
-        
-        dispatch_async(dispatch_queue_create(Constant.Queue.download, nil)) {
+        if let data = photo.data {
             
-            let data = NSData(contentsOfURL: url!)
+            imageView.image = UIImage(data: data)
+            layoutIfNeeded()
             
-            let image = UIImage(data: data!)
+        } else {
             
-            dispatch_async(dispatch_get_main_queue(), {
+            let gifUrl = NSBundle.mainBundle().URLForResource("loading_spinner", withExtension: "gif")
+            let gifImage = UIImage.animatedImageWithAnimatedGIFData(NSData(contentsOfURL: gifUrl!)!)
+            
+            imageView.animationImages = gifImage?.images
+            imageView.animationDuration = (gifImage?.duration)!
+            imageView.image = gifImage?.images![(gifImage?.images?.count)! - 1]
+            layoutIfNeeded()
+            imageView.startAnimating()
+            
+            let url = NSURL(string: photo.url_q)
+            
+            dispatch_async(dispatch_queue_create(Constant.Queue.download, nil)) {
                 
-                self.imageView.image = image
-            })
+                let data = NSData(contentsOfURL: url!)
+                
+                Photo.setImageDataForPhoto(photo, inContext: moc, data: data!)
+                
+                dispatch_async(dispatch_get_main_queue(), {
+                    
+                    self.imageView.stopAnimating()
+                    self.imageView.image = UIImage(data: data!)
+                })
+            }
         }
+        
     }
 }
