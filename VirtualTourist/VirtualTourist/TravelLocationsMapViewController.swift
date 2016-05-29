@@ -179,8 +179,9 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
         
-        
         if let annotation = view.annotation, let pin = Pin.findOrFetchPinInContext(managedObjectContext, t: LatLon(annotation.coordinate.latitude, annotation.coordinate.longitude)) {
+            
+            mapView.deselectAnnotation(annotation, animated: false)
             
             switch editBarButton.status {
                 

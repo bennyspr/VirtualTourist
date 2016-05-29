@@ -26,6 +26,7 @@ class PhotoAlbumViewController: ViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupMapView()
         setupCollectionView()
         
 //        photos = [
@@ -68,6 +69,16 @@ class PhotoAlbumViewController: ViewController {
     private func getDimension() -> CGFloat {
         
         return (self.view.frame.size.width - (2 * self.space)) / 3.0
+    }
+    
+    private func setupMapView() {
+
+        mapView.addAnnotation(pin.annotation)
+        
+        let region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: pin.latitude, longitude: pin.longitude), span: MKCoordinateSpanMake(0.2, 0.2))
+        
+        mapView.setRegion(region, animated: false)
+        
     }
     
     private func setupCollectionView() {

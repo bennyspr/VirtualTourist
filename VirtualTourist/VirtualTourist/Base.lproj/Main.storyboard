@@ -94,7 +94,9 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="BF4-lJ-FBz">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="zVK-vr-Q72"/>
+                                    <constraint firstAttribute="height" constant="128" id="zVK-vr-Q72">
+                                        <variation key="widthClass=compact" constant="128"/>
+                                    </constraint>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -260,7 +262,9 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="BF4-lJ-FBz" secondAttribute="trailing" id="2uX-AQ-HYA"/>
                             <constraint firstAttribute="trailing" secondItem="jhI-7W-Uga" secondAttribute="trailing" id="6cb-bV-i06"/>
-                            <constraint firstItem="BF4-lJ-FBz" firstAttribute="top" secondItem="Av9-pM-wEr" secondAttribute="bottom" id="C3V-cf-MX3"/>
+                            <constraint firstItem="BF4-lJ-FBz" firstAttribute="top" secondItem="Av9-pM-wEr" secondAttribute="bottom" id="C3V-cf-MX3">
+                                <variation key="widthClass=compact" constant="0.0"/>
+                            </constraint>
                             <constraint firstItem="jhI-7W-Uga" firstAttribute="top" secondItem="dYG-Qx-Bpq" secondAttribute="bottom" id="DGJ-lo-nD9"/>
                             <constraint firstItem="dYG-Qx-Bpq" firstAttribute="top" secondItem="BF4-lJ-FBz" secondAttribute="bottom" constant="14" id="Mj3-7Z-zzV">
                                 <variation key="widthClass=compact" constant="0.0"/>
