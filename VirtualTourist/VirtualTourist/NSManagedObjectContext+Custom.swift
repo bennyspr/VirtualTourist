@@ -5,8 +5,8 @@
 //  Created by Benny on 5/1/16.
 //  Copyright © 2016 Benny Rodriguez. All rights reserved.
 //
+//  Reference Book: Core Data by Florian Kugler and Daniel Eggert.
 
-import Foundation
 import CoreData
 
 extension NSManagedObjectContext {
