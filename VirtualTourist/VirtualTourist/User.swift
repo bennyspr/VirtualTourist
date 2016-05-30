@@ -37,25 +37,25 @@ public class User {
             if let key = defaults.objectForKey(UserDefaultKey.LatitudeDegree.rawValue) as? Double {
                 region.center.latitude = key
             } else {
-                region.center.latitude = 17.895273380028243
+                region.center.latitude = 17.89
             }
             
             if let key = defaults.objectForKey(UserDefaultKey.LongitudeDegree.rawValue) as? Double {
                 region.center.longitude = key
             } else {
-                region.center.longitude = -66.147898432380302
+                region.center.longitude = -66.14
             }
             
             if let key = defaults.objectForKey(UserDefaultKey.LatitudeDelta.rawValue) as? Double {
                 region.span.latitudeDelta = key
             } else {
-                region.span.latitudeDelta = 7.3507605481962717
+                region.span.latitudeDelta = 7.35
             }
             
             if let key = defaults.objectForKey(UserDefaultKey.LongitudeDelta.rawValue) as? Double {
                 region.span.longitudeDelta = key
             } else {
-                region.span.longitudeDelta = 4.8067309116039638
+                region.span.longitudeDelta = 4.80
             }
             
             return region

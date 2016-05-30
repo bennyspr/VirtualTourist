@@ -13,7 +13,20 @@ class PhotoAlbumCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    
+    override var selected: Bool {
+        get {
+            return super.selected
+        }
+        set {
+            if newValue {
+                super.selected = true
+                self.imageView.alpha = 0.5
+            } else if newValue == false {
+                super.selected = false
+                self.imageView.alpha = 1.0
+            }
+        }
+    }
     
     override func prepareForReuse() {
         super.prepareForReuse()

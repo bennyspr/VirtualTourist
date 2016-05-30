@@ -14,6 +14,8 @@ class PhotoManager {
     private var pin: Pin!
     private var moc: NSManagedObjectContext!
     private var photos: [Photo] = []
+    private var page: Int = 1
+    private var pages: Int = 1
     
     lazy var connectionManager: ConnectionManager = {
         
@@ -35,9 +37,31 @@ class PhotoManager {
         return photos
     }
     
+    func removePhoto(photo: Photo) -> Int? {
+        
+        if let index = photos.indexOf(photo) {
+            
+            photos.removeAtIndex(index)
+            
+            moc.performChanges {
+                
+                self.moc.deleteObject(photo)
+            }
+            
+            return index
+        }
+        
+        return nil
+    }
+    
     func hasPhotos() -> Bool {
         
         return pin.photos.count > 0
+    }
+    
+    func photosCount() -> Int {
+        
+        return photos.count
     }
     
     func requestPhotos(completion: (Bool, String?) -> Void) {
@@ -55,8 +79,14 @@ class PhotoManager {
             "content_type": 1,
             "safe_search": 1,
             "per_page": 24,
-            "page": 1
+            "page": page
         ]
+        
+        if page <= pages {
+            page = page + 1
+        } else {
+            page = 1
+        }
         
         connectionManager.httpRequest(requestAPI: flickrApi) { (response, success, errorMessage) in
             
@@ -65,6 +95,11 @@ class PhotoManager {
                 if success {
                     
                     if let data = response as? JSON, let results = data["photos"] as? JSON {
+                        
+                        if let pages = results["pages"] as? Int {
+                            
+                            self.pages = pages
+                        }
                         
                         if let photos = results["photo"] as? JSONArray {
                             
@@ -93,8 +128,20 @@ class PhotoManager {
                     completion(false, "Something went wrong.")
                 }
             })
+        }
+    }
+    
+    func newCollection(completion: (Bool, String?) -> Void) {
+        
+        for photo in photos {
             
+            removePhoto(photo)
         }
         
+        requestPhotos { (success, errorMessage) in
+            
+            completion(success, errorMessage)
+        }
     }
 }
+

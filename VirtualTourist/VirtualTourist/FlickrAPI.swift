@@ -67,8 +67,6 @@ class FlickrAPI: RequestAPIProtocol {
             url += VirtualTouristHelper.escapedParameters(parameters)
         }
         
-        print(url)
-        
         return NSURL(string: url)!
     }
     

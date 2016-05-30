@@ -249,9 +249,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                 <items>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="iPs-Hv-jSE"/>
-                                    <barButtonItem title="New Collection" id="7rW-IR-dtv">
+                                    <barButtonItem enabled="NO" title="New Collection" id="7rW-IR-dtv" customClass="CollectionBarButton" customModule="VirtualTourist" customModuleProvider="target">
                                         <connections>
-                                            <action selector="handleNewCollectionTapAction:" destination="i1P-qs-S3q" id="Lkc-VY-oPc"/>
+                                            <action selector="handleBarButtonItemTapAction:" destination="i1P-qs-S3q" id="RkC-fo-mfo"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem style="plain" systemItem="flexibleSpace" id="K2x-yL-Dow"/>
@@ -315,6 +315,7 @@
                         </variation>
                     </view>
                     <connections>
+                        <outlet property="barButtonItem" destination="7rW-IR-dtv" id="dFj-FH-4Pm"/>
                         <outlet property="collectionView" destination="jpI-Gm-VD8" id="cqY-0T-Xfg"/>
                         <outlet property="mapView" destination="BF4-lJ-FBz" id="aJz-jT-F9q"/>
                         <outlet property="messageLabel" destination="MIg-CH-Ali" id="s38-n7-HlS"/>

@@ -55,7 +55,7 @@ extension Pin: ManagedObjectType {
     public static var defaultSortDescriptors: [NSSortDescriptor] {
         
         return [
-            // NSSortDescriptor(key: "date", ascending: false)
+            // NSSortDescriptor(key: "latitude", ascending: false)
         ]
     }
 }

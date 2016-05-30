@@ -16,44 +16,79 @@ class PhotoAlbumViewController: ViewController {
     @IBOutlet weak var middleView: UIView!
     @IBOutlet weak var messageLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var barButtonItem: CollectionBarButton!
     
     var pin: Pin!
     
     private var manager: PhotoManager!
     
     private let space: CGFloat = 3.0
+    
+    private var selectedPhotos: [Photo] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupMapView()
         setupCollectionView()
-        
-//        photos = [
-//            [
-//                "farm": 7,
-//                "height_m": 375,
-//                "height_q": 150,
-//                "id": 6176202752,
-//                "isfamily": 0,
-//                "isfriend": 0,
-//                "ispublic": 1,
-//                "owner": "56978609@N08",
-//                "secret": "0ca0cfa15d",
-//                "server": 6177,
-//                "title": "Merony United Methodist Church",
-//                "url_m": "https://farm7.staticflickr.com/6177/6176202752_0ca0cfa15d.jpg",
-//                "url_q": "https://farm7.staticflickr.com/6177/6176202752_0ca0cfa15d_q.jpg",
-//                "width_m": 500,
-//                "width_q":150
-//            ]
-//        ]
     }
     
-    @IBAction func handleNewCollectionTapAction(sender: AnyObject) {
+
+    @IBAction func handleBarButtonItemTapAction(sender: CollectionBarButton) {
         
+        sender.enabled = false
         
+        switch sender.status {
+            
+        case .New:
+            
+            showLabelWithMessage(true, message: "Loading new images...")
+            
+            manager.newCollection({ (success, errorMessage) in
+                
+                self.showLabelWithMessage(false)
+                
+                if success {
+                    
+                    self.collectionView.reloadData()
+                    
+                    if self.manager.photosCount() == 0 {
+                        self.showLabelWithMessage(true, message: "No Photos Found.")
+                    } else {
+                       self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
+                    }
+                    
+                } else if let message = errorMessage {
+                    self.presentAlertView(withTitle: "Error Message", message: message)
+                    
+                } else {
+                    self.presentAlertView(message: "Sorry, something went wrong.")
+                }
+                
+                sender.enabled = true
+            })
+            
+            break
+        case .Remove:
+            
+            for photo in selectedPhotos.reverse() {
+                
+                if let index = self.manager.removePhoto(photo) {
+                    
+                    self.collectionView.deleteItemsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)])
+                }
+            }
+            
+            selectedPhotos = []
+            
+            checkPhotoSelected()
+            
+            sender.enabled = true
+            
+            break
+        }
     }
+   
     
     override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
         
@@ -63,6 +98,7 @@ class PhotoAlbumViewController: ViewController {
     override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
         
         collectionView.reloadData()
+        
         collectionView.hidden = false
     }
     
@@ -83,6 +119,8 @@ class PhotoAlbumViewController: ViewController {
     
     private func setupCollectionView() {
         
+        collectionView.allowsMultipleSelection = true
+        
         manager = PhotoManager(pin: pin, inContext: managedObjectContext)
         
         if !manager.hasPhotos() {
@@ -95,6 +133,12 @@ class PhotoAlbumViewController: ViewController {
                 
                 if success {
                     self.collectionView.reloadData()
+                    if !self.manager.hasPhotos() {
+                        self.showLabelWithMessage(true, message: "No Photos Found.")
+                    } else {
+                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
+                        self.barButtonItem.enabled = true
+                    }
                 } else if let message = errorMessage {
                     self.presentAlertView(withTitle: "Error Message", message: message)
                 } else {
@@ -105,6 +149,7 @@ class PhotoAlbumViewController: ViewController {
         } else {
             
             collectionView.reloadData()
+            barButtonItem.enabled = true
         }
     }
     
@@ -119,20 +164,40 @@ class PhotoAlbumViewController: ViewController {
         }
         
     }
+    
+    private func checkPhotoSelected() {
+        
+        if selectedPhotos.count > 0 {
+            
+            if selectedPhotos.count == 1 {
+                barButtonItem.title = "Remove Selected Picture"
+            } else {
+                barButtonItem.title = "Remove Selected Pictures"
+            }
+            barButtonItem.status = CollectionStatusButton.Remove
+            
+        } else {
+            
+            barButtonItem.title = "New Collection"
+            barButtonItem.status = CollectionStatusButton.New
+        }
+    }
+    
+    private func delete() {
+        
+    }
 }
 
 // MARK: UICollectionViewDataSource
 extension PhotoAlbumViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return manager.getPhotos().count
+        return manager.photosCount()
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCell", forIndexPath: indexPath) as! PhotoAlbumCell
-        
-        print(indexPath.row)
         
         cell.configureWithPhoto(manager.getPhotos()[indexPath.row], inContext: managedObjectContext)
         
@@ -142,6 +207,23 @@ extension PhotoAlbumViewController: UICollectionViewDataSource {
 
 // MARK: UICollectionViewDelegate
 extension PhotoAlbumViewController: UICollectionViewDelegate {
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        selectedPhotos.append(manager.getPhotos()[indexPath.row])
+        
+        checkPhotoSelected()
+    }
+    
+    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+        
+        if let index = selectedPhotos.indexOf(manager.getPhotos()[indexPath.row]) {
+            
+            selectedPhotos.removeAtIndex(index)
+        }
+        
+        checkPhotoSelected()
+    }
     
 }
 
@@ -162,33 +244,6 @@ extension PhotoAlbumViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
         
         return space
-    }
-    
-
-}
-// MARK: NSFetchedResultsControllerDelegate
-extension PhotoAlbumViewController: NSFetchedResultsControllerDelegate {
-    
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
-        
-        switch type {
-            
-        case .Insert:
-            
-           
-            break
-            
-        case .Delete:
-            
-            
-            break
-            
-        case .Move:
-            break
-            
-        case .Update:
-            break
-        }
     }
 }
 

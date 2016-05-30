@@ -39,3 +39,9 @@ enum DataProviderUpdate<Object> {
     case Move(NSIndexPath, NSIndexPath)
     case Delete(NSIndexPath)
 }
+
+enum CollectionStatusButton: String {
+    
+    case Remove
+    case New
+}

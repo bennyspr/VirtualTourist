@@ -17,14 +17,9 @@ class TravelLocationsMapViewController: ViewController {
     
     private let height: CGFloat = 60
     private var alreadyLoaded: Bool = false
-    
-    
-    
     private lazy var bottomView: UIView = {
         return self.viewForBottom()
     }()
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,7 +60,6 @@ class TravelLocationsMapViewController: ViewController {
         
         let request = Pin.sortedFetchRequest
         request.returnsObjectsAsFaults = false
-//        request.fetchBatchSize = 20
         frc = NSFetchedResultsController(fetchRequest: request,
                                              managedObjectContext: managedObjectContext,
                                              sectionNameKeyPath: nil, cacheName: nil)
@@ -73,7 +67,6 @@ class TravelLocationsMapViewController: ViewController {
         
         do {
             try frc.performFetch()
-
         } catch {
             
         }
@@ -87,9 +80,7 @@ class TravelLocationsMapViewController: ViewController {
             UIView.animateWithDuration(0.5, animations: {
                 self.bottomView.frame.origin.y -= self.height
                 self.mapView.frame.origin.y -= self.height
-            }) { (finished) in
-                
-            }
+            })
             
             break
         case .Done:
@@ -97,9 +88,7 @@ class TravelLocationsMapViewController: ViewController {
             UIView.animateWithDuration(0.5, animations: {
                 self.bottomView.frame.origin.y = self.view.frame.height
                 self.mapView.frame.origin.y = 0
-            }) { (finished) in
-                
-            }
+            })
             
             break
         }
@@ -154,6 +143,7 @@ class TravelLocationsMapViewController: ViewController {
         }
 
     }
+
 }
 
 // MARK: MKMapViewDelegate
@@ -214,7 +204,6 @@ extension TravelLocationsMapViewController: NSFetchedResultsControllerDelegate {
         case .Insert:
 
             if let pin = anObject as? Pin {
-                // mapView.removeAnnotation(pin.annotation)
                 mapView.addAnnotation(pin.annotation)
             }
             break

@@ -63,7 +63,7 @@ extension Photo: ManagedObjectType {
     public static var defaultSortDescriptors: [NSSortDescriptor] {
         
         return [
-            // NSSortDescriptor(key: "date", ascending: false)
+            // NSSortDescriptor(key: "id", ascending: false)
         ]
     }
 }
