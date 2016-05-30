@@ -5,6 +5,8 @@
 //  Created by Benny on 4/23/16.
 //  Copyright © 2016 Benny Rodriguez. All rights reserved.
 //
+//  A UIImage category that loads animated GIFs.
+//  https://github.com/mayoff/uiimage-from-animated-gif
 
 import UIKit
 import CoreData
