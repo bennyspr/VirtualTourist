@@ -11,7 +11,7 @@
 import UIKit
 import MapKit
 
-public class User {
+open class User {
     
     class var sharedInstance: User {
         
@@ -23,9 +23,9 @@ public class User {
         return Singleton.instance
     }
     
-    private lazy var defaults = {
+    fileprivate lazy var defaults = {
         
-       return NSUserDefaults.standardUserDefaults()
+       return UserDefaults.standard
     }()
     
     var previousRegion: MKCoordinateRegion {
@@ -34,25 +34,25 @@ public class User {
             
             var region = MKCoordinateRegion()
             
-            if let key = defaults.objectForKey(UserDefaultKey.LatitudeDegree.rawValue) as? Double {
+            if let key = defaults.object(forKey: UserDefaultKey.LatitudeDegree.rawValue) as? Double {
                 region.center.latitude = key
             } else {
                 region.center.latitude = 17.89
             }
             
-            if let key = defaults.objectForKey(UserDefaultKey.LongitudeDegree.rawValue) as? Double {
+            if let key = defaults.object(forKey: UserDefaultKey.LongitudeDegree.rawValue) as? Double {
                 region.center.longitude = key
             } else {
                 region.center.longitude = -66.14
             }
             
-            if let key = defaults.objectForKey(UserDefaultKey.LatitudeDelta.rawValue) as? Double {
+            if let key = defaults.object(forKey: UserDefaultKey.LatitudeDelta.rawValue) as? Double {
                 region.span.latitudeDelta = key
             } else {
                 region.span.latitudeDelta = 7.35
             }
             
-            if let key = defaults.objectForKey(UserDefaultKey.LongitudeDelta.rawValue) as? Double {
+            if let key = defaults.object(forKey: UserDefaultKey.LongitudeDelta.rawValue) as? Double {
                 region.span.longitudeDelta = key
             } else {
                 region.span.longitudeDelta = 4.80
@@ -62,21 +62,21 @@ public class User {
         }
         set(region) {
     
-            defaults.setDouble(region.center.latitude, forKey: UserDefaultKey.LatitudeDegree.rawValue)
-            defaults.setDouble(region.center.longitude, forKey: UserDefaultKey.LongitudeDegree.rawValue)
-            defaults.setDouble(region.span.latitudeDelta, forKey: UserDefaultKey.LatitudeDelta.rawValue)
-            defaults.setDouble(region.span.longitudeDelta, forKey: UserDefaultKey.LongitudeDelta.rawValue)
+            defaults.set(region.center.latitude, forKey: UserDefaultKey.LatitudeDegree.rawValue)
+            defaults.set(region.center.longitude, forKey: UserDefaultKey.LongitudeDegree.rawValue)
+            defaults.set(region.span.latitudeDelta, forKey: UserDefaultKey.LatitudeDelta.rawValue)
+            defaults.set(region.span.longitudeDelta, forKey: UserDefaultKey.LongitudeDelta.rawValue)
         }
         
     }
     
     
     
-    private init() {
+    fileprivate init() {
         
     }
     
-    public func save() {
+    open func save() {
         
         
     }

@@ -34,10 +34,10 @@ enum StatusButton: String {
 }
 
 enum DataProviderUpdate<Object> {
-    case Insert(NSIndexPath)
-    case Update(NSIndexPath, Object)
-    case Move(NSIndexPath, NSIndexPath)
-    case Delete(NSIndexPath)
+    case insert(IndexPath)
+    case update(IndexPath, Object)
+    case move(IndexPath, IndexPath)
+    case delete(IndexPath)
 }
 
 enum CollectionStatusButton: String {

@@ -11,13 +11,13 @@ import CoreData
 @objc(Photo)
 public final class Photo: ManagedObject {
     
-    @NSManaged public private(set) var id: String
-    @NSManaged public private(set) var data: NSData?
-    @NSManaged public private(set) var url_m: String
-    @NSManaged public private(set) var url_q: String
-    @NSManaged public private(set) var pin: Pin
+    @NSManaged public fileprivate(set) var id: String
+    @NSManaged public fileprivate(set) var data: Data?
+    @NSManaged public fileprivate(set) var url_m: String
+    @NSManaged public fileprivate(set) var url_q: String
+    @NSManaged public fileprivate(set) var pin: Pin
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, data: NSDictionary, pin: Pin) -> Photo {
+    public static func insertIntoContext(_ moc: NSManagedObjectContext, data: NSDictionary, pin: Pin) -> Photo {
         
         let photo: Photo = moc.insertObject()
         photo.id = data["id"] as! String
@@ -27,7 +27,7 @@ public final class Photo: ManagedObject {
         return photo
     }
     
-    public static func findOrCreatePhotoForPin(pin: Pin, inContext moc: NSManagedObjectContext, data: NSDictionary) -> Photo {
+    public static func findOrCreatePhotoForPin(_ pin: Pin, inContext moc: NSManagedObjectContext, data: NSDictionary) -> Photo {
      
         let id = data["id"] as! String
         let predicate = NSPredicate(format: "%K == %d", "id", id)
@@ -43,7 +43,7 @@ public final class Photo: ManagedObject {
         return photo
     }
     
-    public static func setImageDataForPhoto(photo: Photo, inContext moc: NSManagedObjectContext, data: NSData) {
+    public static func setImageDataForPhoto(_ photo: Photo, inContext moc: NSManagedObjectContext, data: Data) {
         
         moc.performChanges {
             

@@ -11,9 +11,9 @@ import CoreData
 
 extension NSManagedObjectContext {
     
-    public func insertObject<A: ManagedObject where A: ManagedObjectType> () -> A {
+    public func insertObject<A: ManagedObject> () -> A where A: ManagedObjectType {
         
-        guard let obj = NSEntityDescription.insertNewObjectForEntityForName(A.entityName, inManagedObjectContext: self) as? A else {
+        guard let obj = NSEntityDescription.insertNewObject(forEntityName: A.entityName, into: self) as? A else {
             
             fatalError("Wrong object type")
         }
@@ -34,9 +34,9 @@ extension NSManagedObjectContext {
         }
     }
     
-    public func performChanges(block: () -> ()) {
+    public func performChanges(_ block: @escaping () -> ()) {
         
-        performBlock {
+        perform {
             block()
             self.saveOrRollback()
         }

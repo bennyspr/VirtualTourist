@@ -24,9 +24,9 @@ extension ManagedObjectType {
         return []
     }
     
-    public static var sortedFetchRequest: NSFetchRequest {
+    public static var sortedFetchRequest: NSFetchRequest<NSFetchRequestResult> {
         
-        let request = NSFetchRequest(entityName: entityName)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: entityName)
         request.sortDescriptors = defaultSortDescriptors
         return request
     }
@@ -34,7 +34,7 @@ extension ManagedObjectType {
 
 extension ManagedObjectType where Self: ManagedObject {
     
-    public static func findOrCreateInContext(moc: NSManagedObjectContext, matchingPredicate predicate: NSPredicate, configure: Self -> ()) -> Self {
+    public static func findOrCreateInContext(_ moc: NSManagedObjectContext, matchingPredicate predicate: NSPredicate, configure: (Self) -> ()) -> Self {
         
         guard let obj = findOrFetchInContext(moc, matchingPredicate: predicate) else {
             
@@ -46,7 +46,7 @@ extension ManagedObjectType where Self: ManagedObject {
         return obj
     }
     
-    public static func findOrFetchInContext(moc: NSManagedObjectContext, matchingPredicate predicate: NSPredicate) -> Self? {
+    public static func findOrFetchInContext(_ moc: NSManagedObjectContext, matchingPredicate predicate: NSPredicate) -> Self? {
         
         guard let obj = materializedObjectInContext(moc, matchingPredicate: predicate) else {
             
@@ -61,11 +61,11 @@ extension ManagedObjectType where Self: ManagedObject {
         return obj
     }
     
-    public static func materializedObjectInContext(moc: NSManagedObjectContext, matchingPredicate predicate: NSPredicate) -> Self? {
+    public static func materializedObjectInContext(_ moc: NSManagedObjectContext, matchingPredicate predicate: NSPredicate) -> Self? {
         
-        for obj in moc.registeredObjects where !obj.fault {
+        for obj in moc.registeredObjects where !obj.isFault {
             
-            guard let res = obj as? Self where predicate.evaluateWithObject(res) else {
+            guard let res = obj as? Self, predicate.evaluate(with: res) else {
                 
                 continue
             }
@@ -76,13 +76,13 @@ extension ManagedObjectType where Self: ManagedObject {
         return nil
     }
     
-    public static func fetchInContext(context: NSManagedObjectContext, @noescape configurationBlock: NSFetchRequest -> () = { _ in }) -> [Self] {
+    public static func fetchInContext(_ context: NSManagedObjectContext, configurationBlock: (NSFetchRequest<NSFetchRequestResult>) -> () = { _ in }) -> [Self] {
         
-        let request = NSFetchRequest(entityName: Self.entityName)
+        let request = NSFetchRequest<NSFetchRequestResult>(entityName: Self.entityName)
         
         configurationBlock(request)
         
-        guard let result = try! context.executeFetchRequest(request) as? [Self] else {
+        guard let result = try! context.fetch(request) as? [Self] else {
             
             fatalError("Fetched objects have wrong type")
         }

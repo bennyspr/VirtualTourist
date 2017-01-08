@@ -15,9 +15,9 @@ class TravelLocationsMapViewController: ViewController {
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var editBarButton: EditBarButton!
     
-    private let height: CGFloat = 60
-    private var alreadyLoaded: Bool = false
-    private lazy var bottomView: UIView = {
+    fileprivate let height: CGFloat = 60
+    fileprivate var alreadyLoaded: Bool = false
+    fileprivate lazy var bottomView: UIView = {
         return self.viewForBottom()
     }()
     
@@ -27,7 +27,7 @@ class TravelLocationsMapViewController: ViewController {
         setupMapView()
     }
 
-    override func viewDidAppear(animated: Bool) {
+    override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
         mapView.setRegion(user.previousRegion, animated: false)
@@ -44,17 +44,17 @@ class TravelLocationsMapViewController: ViewController {
     
     
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         
         if segue.identifier == "albumViewSegue", let pin = sender as? Pin {
             
-            let controller = segue.destinationViewController as! PhotoAlbumViewController
+            let controller = segue.destination as! PhotoAlbumViewController
             
             controller.pin = pin
         }
     }
     
-    private func setupMapView() {
+    fileprivate func setupMapView() {
         
         view.addSubview(bottomView)
         
@@ -72,12 +72,12 @@ class TravelLocationsMapViewController: ViewController {
         }
     }
 
-    @IBAction func handleEditButtonTapAction(sender: EditBarButton) {
+    @IBAction func handleEditButtonTapAction(_ sender: EditBarButton) {
         
         switch sender.status {
         case .Edit:
             sender.status = StatusButton.Done
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self.bottomView.frame.origin.y -= self.height
                 self.mapView.frame.origin.y -= self.height
             })
@@ -85,7 +85,7 @@ class TravelLocationsMapViewController: ViewController {
             break
         case .Done:
             sender.status = StatusButton.Edit
-            UIView.animateWithDuration(0.5, animations: {
+            UIView.animate(withDuration: 0.5, animations: {
                 self.bottomView.frame.origin.y = self.view.frame.height
                 self.mapView.frame.origin.y = 0
             })
@@ -94,37 +94,37 @@ class TravelLocationsMapViewController: ViewController {
         }
     }
     
-    private func viewForBottom() -> UIView {
+    fileprivate func viewForBottom() -> UIView {
         
         let bottomView = UIView(frame: CGRect(x: 0, y: view.frame.height, width: view.frame.width, height: height))
-        bottomView.backgroundColor = UIColor.redColor()
+        bottomView.backgroundColor = UIColor.red
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: bottomView.frame.width, height: bottomView.frame.height))
         label.text = "Tap Pins to Delete"
-        label.backgroundColor = .clearColor()
-        label.textColor = .whiteColor()
-        label.textAlignment = .Center
+        label.backgroundColor = .clear
+        label.textColor = .white
+        label.textAlignment = .center
         bottomView.addSubview(label)
         return bottomView
     }
     
     
-    @IBAction func handleMapLongPressGestureAction(sender: UILongPressGestureRecognizer) {
+    @IBAction func handleMapLongPressGestureAction(_ sender: UILongPressGestureRecognizer) {
         
         if editBarButton.status == .Done { return }
         
         switch sender.state {
             
-        case .Possible:
+        case .possible:
             break
-        case .Began:
+        case .began:
             break
-        case .Changed:
+        case .changed:
             break
-        case .Ended:
+        case .ended:
             
             let annotation = MKPointAnnotation()
             
-            annotation.coordinate = mapView.convertPoint(sender.locationInView(mapView), toCoordinateFromView: mapView)
+            annotation.coordinate = mapView.convert(sender.location(in: mapView), toCoordinateFrom: mapView)
             
             managedObjectContext.performChanges {
                 
@@ -135,9 +135,9 @@ class TravelLocationsMapViewController: ViewController {
             }
             
             break
-        case .Cancelled:
+        case .cancelled:
             break
-        case .Failed:
+        case .failed:
             break
             
         }
@@ -149,15 +149,15 @@ class TravelLocationsMapViewController: ViewController {
 // MARK: MKMapViewDelegate
 extension TravelLocationsMapViewController: MKMapViewDelegate {
     
-    func mapView(mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
+    func mapView(_ mapView: MKMapView, regionDidChangeAnimated animated: Bool) {
         
         user.previousRegion = mapView.region
     }
     
-    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
     
         let reuseId = "pin"
-        var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
+        var pinView = mapView.dequeueReusableAnnotationView(withIdentifier: reuseId) as? MKPinAnnotationView
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
         } else {
@@ -167,7 +167,7 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
         return pinView
     }
     
-    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+    func mapView(_ mapView: MKMapView, didSelect view: MKAnnotationView) {
         
         if let annotation = view.annotation, let pin = Pin.findOrFetchPinInContext(managedObjectContext, t: LatLon(annotation.coordinate.latitude, annotation.coordinate.longitude)) {
             
@@ -176,14 +176,14 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
             switch editBarButton.status {
                 
             case .Edit:
-                performSegueWithIdentifier("albumViewSegue", sender: pin)
+                performSegue(withIdentifier: "albumViewSegue", sender: pin)
                 break
             case .Done:
                 if let annotation = view.annotation {
                     
                     managedObjectContext.performChanges {
                         
-                        self.managedObjectContext.deleteObject(pin)
+                        self.managedObjectContext.delete(pin)
                     }
                     
                     mapView.removeAnnotation(annotation)
@@ -197,28 +197,28 @@ extension TravelLocationsMapViewController: MKMapViewDelegate {
 // MARK: NSFetchedResultsControllerDelegate
 extension TravelLocationsMapViewController: NSFetchedResultsControllerDelegate {
     
-    func controller(controller: NSFetchedResultsController, didChangeObject anObject: AnyObject, atIndexPath indexPath: NSIndexPath?, forChangeType type: NSFetchedResultsChangeType, newIndexPath: NSIndexPath?) {
+    func controller(_ controller: NSFetchedResultsController<NSFetchRequestResult>, didChange anObject: Any, at indexPath: IndexPath?, for type: NSFetchedResultsChangeType, newIndexPath: IndexPath?) {
         
         switch type {
             
-        case .Insert:
+        case .insert:
 
             if let pin = anObject as? Pin {
                 mapView.addAnnotation(pin.annotation)
             }
             break
             
-        case .Delete:
+        case .delete:
             
             if let pin = anObject as? Pin {
                 mapView.removeAnnotation(pin.annotation)
             }
             break
             
-        case .Move:
+        case .move:
             break
             
-        case .Update:
+        case .update:
             break
         }
     }

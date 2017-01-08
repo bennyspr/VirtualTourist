@@ -12,20 +12,20 @@ import UIKit
 
 protocol RequestAPIProtocol: class {
     
-    func url() -> NSURL
+    func url() -> URL
     func httpHeaderFields() -> [HeaderFieldForHTTP]
     func httpBody() -> NSDictionary?
     func httpMethod() -> HTTPRequestMethod
-    func newDataAfterRequest(data: NSData) -> NSData
+    func newDataAfterRequest(_ data: Data) -> Data
 }
 
 class ConnectionManager: NSObject {
     
-    func httpRequest(requestAPI requestAPI: RequestAPIProtocol, completion: ((AnyObject?, Bool, String?) -> Void)) {
+    func httpRequest(requestAPI: RequestAPIProtocol, completion: @escaping ((AnyObject?, Bool, String?) -> Void)) {
         
         switch Reach().connectionStatus() {
             
-        case .Unknown, .Offline:
+        case .unknown, .offline:
             
             completion(nil, false, "Unable to connect to the Internet. Please verify your network connection.")
             return
@@ -34,15 +34,15 @@ class ConnectionManager: NSObject {
             break
         }
         
-        let request = NSMutableURLRequest(URL: requestAPI.url())
+        let request = NSMutableURLRequest(url: requestAPI.url())
         
-        request.HTTPMethod = requestAPI.httpMethod().rawValue
+        request.httpMethod = requestAPI.httpMethod().rawValue
         
         if requestAPI.httpMethod() == .DELETE {
             
-            var xsrfCookie: NSHTTPCookie? = nil
+            var xsrfCookie: HTTPCookie? = nil
             
-            let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+            let sharedCookieStorage = HTTPCookieStorage.shared
             
             for cookie in sharedCookieStorage.cookies! {
                 
@@ -66,7 +66,7 @@ class ConnectionManager: NSObject {
         if let json = requestAPI.httpBody() {
             
             do {
-                request.HTTPBody = try NSJSONSerialization.dataWithJSONObject(json, options: [])
+                request.httpBody = try JSONSerialization.data(withJSONObject: json, options: [])
                 
             } catch let error as NSError {
                 
@@ -75,13 +75,13 @@ class ConnectionManager: NSObject {
             }
         }
         
-        let session = NSURLSession.sharedSession()
+        let session = URLSession.shared
         
         session.configuration.timeoutIntervalForRequest = 30.0
         
         session.configuration.timeoutIntervalForResource = 60.0
         
-        let task = session.dataTaskWithRequest(request) { data, response, error in
+        let task = session.dataTask(with: request as URLRequest) { data, response, error in
             
             /* GUARD: Was there an error? */
             guard (error == nil) else {
@@ -91,11 +91,11 @@ class ConnectionManager: NSObject {
             }
             
             /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
+            guard let statusCode = (response as? HTTPURLResponse)?.statusCode, statusCode >= 200 && statusCode <= 299 else {
                 
                 var errorMessage: String!
                 
-                if let response = response as? NSHTTPURLResponse {
+                if let response = response as? HTTPURLResponse {
                     errorMessage = "Your request returned an invalid response! Status code: \(response.statusCode)!"
                 } else if let response = response {
                     errorMessage = "Your request returned an invalid response! Response: \(response)!"
@@ -107,7 +107,9 @@ class ConnectionManager: NSObject {
                     
                     if let data = data {
                         
-                        let parsedResult = try NSJSONSerialization.JSONObjectWithData(requestAPI.newDataAfterRequest(data), options: .AllowFragments)
+                        let newData = requestAPI.newDataAfterRequest(data)
+                        
+                        let parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
                         
                         completion(parsedResult, false, errorMessage)
                         return
@@ -134,7 +136,7 @@ class ConnectionManager: NSObject {
             let newData = requestAPI.newDataAfterRequest(data)
             
             do {
-                parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+                parsedResult = try JSONSerialization.jsonObject(with: newData, options: .allowFragments) as AnyObject
             } catch {
                 parsedResult = nil
                 completion(nil, false, "Could not parse the data as JSON: '\(data)'")

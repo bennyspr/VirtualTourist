@@ -13,9 +13,9 @@ import MapKit
 @objc(Pin)
 public final class Pin: ManagedObject {
     
-    @NSManaged public private(set) var latitude: Double
-    @NSManaged public private(set) var longitude: Double
-    @NSManaged public private(set) var photos: Set<Photo>
+    @NSManaged public fileprivate(set) var latitude: Double
+    @NSManaged public fileprivate(set) var longitude: Double
+    @NSManaged public fileprivate(set) var photos: Set<Photo>
     
     lazy var annotation: MKPointAnnotation = {
         
@@ -25,7 +25,7 @@ public final class Pin: ManagedObject {
         return point
     }()
     
-    public static func insertIntoContext(moc: NSManagedObjectContext, t: LatLon) -> Pin {
+    public static func insertIntoContext(_ moc: NSManagedObjectContext, t: LatLon) -> Pin {
         
         let pin: Pin = moc.insertObject()
         pin.latitude = t.latitude
@@ -33,7 +33,7 @@ public final class Pin: ManagedObject {
         return pin
     }
     
-    public static func findOrFetchPinInContext(moc: NSManagedObjectContext, t: LatLon) -> Pin?  {
+    public static func findOrFetchPinInContext(_ moc: NSManagedObjectContext, t: LatLon) -> Pin?  {
         
         let predicate = NSPredicate(format: "latitude = %@ AND longitude = %@", argumentArray: [t.latitude, t.longitude])
         

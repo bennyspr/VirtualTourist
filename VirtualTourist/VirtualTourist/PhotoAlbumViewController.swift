@@ -20,11 +20,11 @@ class PhotoAlbumViewController: ViewController {
     
     var pin: Pin!
     
-    private var manager: PhotoManager!
+    fileprivate var manager: PhotoManager!
     
-    private let space: CGFloat = 3.0
+    fileprivate let space: CGFloat = 3.0
     
-    private var selectedPhotos: [Photo] = []
+    fileprivate var selectedPhotos: [Photo] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,9 +34,9 @@ class PhotoAlbumViewController: ViewController {
     }
     
 
-    @IBAction func handleBarButtonItemTapAction(sender: CollectionBarButton) {
+    @IBAction func handleBarButtonItemTapAction(_ sender: CollectionBarButton) {
         
-        sender.enabled = false
+        sender.isEnabled = false
         
         switch sender.status {
             
@@ -55,7 +55,7 @@ class PhotoAlbumViewController: ViewController {
                     if self.manager.photosCount() == 0 {
                         self.showLabelWithMessage(true, message: "No Photos Found.")
                     } else {
-                       self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
+                       self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
                     }
                     
                 } else if let message = errorMessage {
@@ -65,17 +65,17 @@ class PhotoAlbumViewController: ViewController {
                     self.presentAlertView(message: "Sorry, something went wrong.")
                 }
                 
-                sender.enabled = true
+                sender.isEnabled = true
             })
             
             break
         case .Remove:
             
-            for photo in selectedPhotos.reverse() {
+            for photo in selectedPhotos.reversed() {
                 
                 if let index = self.manager.removePhoto(photo) {
                     
-                    self.collectionView.deleteItemsAtIndexPaths([NSIndexPath(forRow: index, inSection: 0)])
+                    self.collectionView.deleteItems(at: [IndexPath(row: index, section: 0)])
                 }
             }
             
@@ -83,31 +83,31 @@ class PhotoAlbumViewController: ViewController {
             
             checkPhotoSelected()
             
-            sender.enabled = true
+            sender.isEnabled = true
             
             break
         }
     }
    
     
-    override func willRotateToInterfaceOrientation(toInterfaceOrientation: UIInterfaceOrientation, duration: NSTimeInterval) {
+    override func willRotate(to toInterfaceOrientation: UIInterfaceOrientation, duration: TimeInterval) {
         
-        collectionView.hidden = true
+        collectionView.isHidden = true
     }
     
-    override func didRotateFromInterfaceOrientation(fromInterfaceOrientation: UIInterfaceOrientation) {
+    override func didRotate(from fromInterfaceOrientation: UIInterfaceOrientation) {
         
         collectionView.reloadData()
         
-        collectionView.hidden = false
+        collectionView.isHidden = false
     }
     
-    private func getDimension() -> CGFloat {
+    fileprivate func getDimension() -> CGFloat {
         
         return (self.view.frame.size.width - (2 * self.space)) / 3.0
     }
     
-    private func setupMapView() {
+    fileprivate func setupMapView() {
 
         mapView.addAnnotation(pin.annotation)
         
@@ -117,7 +117,7 @@ class PhotoAlbumViewController: ViewController {
         
     }
     
-    private func setupCollectionView() {
+    fileprivate func setupCollectionView() {
         
         collectionView.allowsMultipleSelection = true
         
@@ -136,8 +136,8 @@ class PhotoAlbumViewController: ViewController {
                     if !self.manager.hasPhotos() {
                         self.showLabelWithMessage(true, message: "No Photos Found.")
                     } else {
-                        self.collectionView.scrollToItemAtIndexPath(NSIndexPath(forRow: 0, inSection: 0), atScrollPosition: .Top, animated: false)
-                        self.barButtonItem.enabled = true
+                        self.collectionView.scrollToItem(at: IndexPath(row: 0, section: 0), at: .top, animated: false)
+                        self.barButtonItem.isEnabled = true
                     }
                 } else if let message = errorMessage {
                     self.presentAlertView(withTitle: "Error Message", message: message)
@@ -149,23 +149,23 @@ class PhotoAlbumViewController: ViewController {
         } else {
             
             collectionView.reloadData()
-            barButtonItem.enabled = true
+            barButtonItem.isEnabled = true
         }
     }
     
-    private func showLabelWithMessage(active: Bool, message: String? = nil) {
+    fileprivate func showLabelWithMessage(_ active: Bool, message: String? = nil) {
         
         if active, let message = message {
-            collectionView.hidden = true
+            collectionView.isHidden = true
             messageLabel.text = message
         } else {
-            collectionView.hidden = false
+            collectionView.isHidden = false
             messageLabel.text = "No Images"
         }
         
     }
     
-    private func checkPhotoSelected() {
+    fileprivate func checkPhotoSelected() {
         
         if selectedPhotos.count > 0 {
             
@@ -183,7 +183,7 @@ class PhotoAlbumViewController: ViewController {
         }
     }
     
-    private func delete() {
+    fileprivate func delete() {
         
     }
 }
@@ -191,13 +191,13 @@ class PhotoAlbumViewController: ViewController {
 // MARK: UICollectionViewDataSource
 extension PhotoAlbumViewController: UICollectionViewDataSource {
     
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return manager.photosCount()
     }
     
-    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("PhotoAlbumCell", forIndexPath: indexPath) as! PhotoAlbumCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PhotoAlbumCell", for: indexPath) as! PhotoAlbumCell
         
         cell.configureWithPhoto(manager.getPhotos()[indexPath.row], inContext: managedObjectContext)
         
@@ -208,18 +208,18 @@ extension PhotoAlbumViewController: UICollectionViewDataSource {
 // MARK: UICollectionViewDelegate
 extension PhotoAlbumViewController: UICollectionViewDelegate {
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
         selectedPhotos.append(manager.getPhotos()[indexPath.row])
         
         checkPhotoSelected()
     }
     
-    func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
         
-        if let index = selectedPhotos.indexOf(manager.getPhotos()[indexPath.row]) {
+        if let index = selectedPhotos.index(of: manager.getPhotos()[indexPath.row]) {
             
-            selectedPhotos.removeAtIndex(index)
+            selectedPhotos.remove(at: index)
         }
         
         checkPhotoSelected()
@@ -230,18 +230,18 @@ extension PhotoAlbumViewController: UICollectionViewDelegate {
 // MARK: UICollectionViewDelegate
 extension PhotoAlbumViewController: UICollectionViewDelegateFlowLayout {
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let dimension = getDimension()
         return CGSize(width: dimension, height: dimension)
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         
         return space
     }
     
-    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAtIndex section: Int) -> CGFloat {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         
         return space
     }

@@ -15,16 +15,16 @@ class PhotoAlbumCell: UICollectionViewCell {
     
     @IBOutlet weak var imageView: UIImageView!
     
-    override var selected: Bool {
+    override var isSelected: Bool {
         get {
-            return super.selected
+            return super.isSelected
         }
         set {
             if newValue {
-                super.selected = true
+                super.isSelected = true
                 self.imageView.alpha = 0.5
             } else if newValue == false {
-                super.selected = false
+                super.isSelected = false
                 self.imageView.alpha = 1.0
             }
         }
@@ -36,17 +36,17 @@ class PhotoAlbumCell: UICollectionViewCell {
         imageView.image = nil
     }
     
-    func configureWithPhoto(photo: Photo, inContext moc: NSManagedObjectContext) {
+    func configureWithPhoto(_ photo: Photo, inContext moc: NSManagedObjectContext) {
         
         if let data = photo.data {
             
-            imageView.image = UIImage(data: data)
+            imageView.image = UIImage(data: data as Data)
             layoutIfNeeded()
             
         } else {
             
-            let gifUrl = NSBundle.mainBundle().URLForResource("loading_spinner", withExtension: "gif")
-            let gifImage = UIImage.animatedImageWithAnimatedGIFData(NSData(contentsOfURL: gifUrl!)!)
+            let gifUrl = Bundle.main.url(forResource: "loading_spinner", withExtension: "gif")
+            let gifImage = UIImage.animatedImage(withAnimatedGIFData: try! Data(contentsOf: gifUrl!))
             
             imageView.animationImages = gifImage?.images
             imageView.animationDuration = (gifImage?.duration)!
@@ -54,15 +54,15 @@ class PhotoAlbumCell: UICollectionViewCell {
             layoutIfNeeded()
             imageView.startAnimating()
             
-            let url = NSURL(string: photo.url_q)
+            let url = URL(string: photo.url_q)
             
-            dispatch_async(dispatch_queue_create(Constant.Queue.download, nil)) {
+            DispatchQueue(label: Constant.Queue.download, attributes: []).async {
                 
-                let data = NSData(contentsOfURL: url!)
+                let data = try? Data(contentsOf: url!)
                 
                 Photo.setImageDataForPhoto(photo, inContext: moc, data: data!)
                 
-                dispatch_async(dispatch_get_main_queue(), {
+                DispatchQueue.main.async(execute: {
                     
                     self.imageView.stopAnimating()
                     self.imageView.image = UIImage(data: data!)

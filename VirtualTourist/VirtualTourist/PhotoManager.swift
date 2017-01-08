@@ -11,11 +11,11 @@ import CoreData
 
 class PhotoManager {
     
-    private var pin: Pin!
-    private var moc: NSManagedObjectContext!
-    private var photos: [Photo] = []
-    private var page: Int = 1
-    private var pages: Int = 1
+    fileprivate var pin: Pin!
+    fileprivate var moc: NSManagedObjectContext!
+    fileprivate var photos: [Photo] = []
+    fileprivate var page: Int = 1
+    fileprivate var pages: Int = 1
     
     lazy var connectionManager: ConnectionManager = {
         
@@ -37,15 +37,15 @@ class PhotoManager {
         return photos
     }
     
-    func removePhoto(photo: Photo) -> Int? {
+    func removePhoto(_ photo: Photo) -> Int? {
         
-        if let index = photos.indexOf(photo) {
+        if let index = photos.index(of: photo) {
             
-            photos.removeAtIndex(index)
+            photos.remove(at: index)
             
             moc.performChanges {
                 
-                self.moc.deleteObject(photo)
+                self.moc.delete(photo)
             }
             
             return index
@@ -64,22 +64,22 @@ class PhotoManager {
         return photos.count
     }
     
-    func requestPhotos(completion: (Bool, String?) -> Void) {
+    func requestPhotos(_ completion: @escaping (Bool, String?) -> Void) {
         
         let flickrApi = FlickrAPI(urlPath: FlickrPath.ServicesRest)
         
         flickrApi.urlParameters = [
-            "method": "flickr.photos.search",
-            "api_key": Constant.Flickr.apiKey,
-            "lat": pin.latitude,
-            "lon": pin.longitude,
-            "extras": "url_q,url_m",
-            "format": "json",
-            "nojsoncallback": 1,
-            "content_type": 1,
-            "safe_search": 1,
-            "per_page": 24,
-            "page": page
+            "method": "flickr.photos.search" as AnyObject,
+            "api_key": Constant.Flickr.apiKey as AnyObject,
+            "lat": pin.latitude as AnyObject,
+            "lon": pin.longitude as AnyObject,
+            "extras": "url_q,url_m" as AnyObject,
+            "format": "json" as AnyObject,
+            "nojsoncallback": 1 as AnyObject,
+            "content_type": 1 as AnyObject,
+            "safe_search": 1 as AnyObject,
+            "per_page": 24 as AnyObject,
+            "page": page as AnyObject
         ]
         
         if page <= pages {
@@ -90,7 +90,7 @@ class PhotoManager {
         
         connectionManager.httpRequest(requestAPI: flickrApi) { (response, success, errorMessage) in
             
-            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            DispatchQueue.main.async(execute: { () -> Void in
                 
                 if success {
                     
@@ -131,7 +131,7 @@ class PhotoManager {
         }
     }
     
-    func newCollection(completion: (Bool, String?) -> Void) {
+    func newCollection(_ completion: @escaping (Bool, String?) -> Void) {
         
         for photo in photos {
             
