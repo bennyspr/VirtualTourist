@@ -2,7 +2,7 @@
  This iPhone app allows users specify travel locations around the world, and create virtual photo albums for each location. The locations and photo albums will be stored in Core Data.
 
 ### Prerequisites
-In order to use the app you need a [Flickr](https://www.flickr.com/) account and then replace the following strings on the Constant.swift file: ADD_YOUR_KEY, ADD_YOUR_SECRET, and ADD_YOUR_USER_ID.
+In order to use the app you need a [Flickr](https://www.flickr.com/) account and then replace the following strings on the Constant.swift file with your account information: ADD_YOUR_KEY, ADD_YOUR_SECRET, and ADD_YOUR_USER_ID.
 ```
 struct Constant {
     struct Flickr {
